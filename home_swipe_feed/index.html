@@ -387,6 +387,7 @@ const profiles = [
     vibe:"Moot court by day, bad reality TV by night. Will fight you about anything except pizza toppings.",
     stats:[{icon:"ph-scales",label:"Law",sub:"Course"},{icon:"ph-calendar-blank",label:"3rd Year",sub:"Year"},{icon:"ph-moon-stars",label:"Night Owl",sub:"Vibe"}],
     photo:"WhatsApp Image 2026-02-03 at 1.55.06 PM (1).jpeg",
+    photoPos:"center top",
     photoCount:3, active:true,
   },
   {
@@ -397,7 +398,8 @@ const profiles = [
     status:"🏋️ Gym done. Anyone want to grab a kota?",
     vibe:"Mechanical engineering but my real passion is braai science. Weekends are for the boys... and maybe you.",
     stats:[{icon:"ph-gear",label:"Engineering",sub:"Course"},{icon:"ph-calendar-blank",label:"2nd Year",sub:"Year"},{icon:"ph-barbell",label:"Gym Rat",sub:"Vibe"}],
-    photo:null, color:"#141414", photoCount:2, active:true,
+    photo:"WhatsApp Unknown 2026-03-24 at 18.58.03/WhatsApp Image 2026-03-24 at 18.56.50 (1).jpeg",
+    photoPos:"center top", photoCount:2, active:true,
   },
   {
     name:"Amahle", age:20,
@@ -407,7 +409,8 @@ const profiles = [
     status:"🎨 Busy with a design brief but my door is open",
     vibe:"First year but already decorated my room better than yours. Sketchbook always in hand.",
     stats:[{icon:"ph-pencil-ruler",label:"Architecture",sub:"Course"},{icon:"ph-calendar-blank",label:"1st Year",sub:"Year"},{icon:"ph-palette",label:"Creative",sub:"Vibe"}],
-    photo:null, color:"#0f1510", photoCount:5, active:false,
+    photo:"WhatsApp Unknown 2026-03-24 at 18.58.03/WhatsApp Image 2026-03-24 at 18.56.49.jpeg",
+    photoPos:"center 20%", photoCount:5, active:false,
   },
   {
     name:"Thabo", age:23,
@@ -417,7 +420,8 @@ const profiles = [
     status:"💻 Debugging since 2pm. Send help (or Nandos)",
     vibe:"Final year dev. Built 3 apps, none finished. Looking for someone to procrastinate productively with.",
     stats:[{icon:"ph-code",label:"Comp Sci",sub:"Course"},{icon:"ph-calendar-blank",label:"4th Year",sub:"Year"},{icon:"ph-terminal-window",label:"Dev Mode",sub:"Vibe"}],
-    photo:null, color:"#0f0f14", photoCount:1, active:false,
+    photo:"WhatsApp Unknown 2026-03-24 at 18.58.03/WhatsApp Image 2026-03-24 at 18.56.50 (2).jpeg",
+    photoPos:"center top", photoCount:1, active:false,
   },
   {
     name:"Lerato", age:21,
@@ -427,7 +431,8 @@ const profiles = [
     status:"☕ At Hatfield Mugg & Bean if anyone wants to join",
     vibe:"Psych student who will absolutely analyse what you just said. Certified empath. Terrible at keeping plants alive.",
     stats:[{icon:"ph-brain",label:"Psychology",sub:"Course"},{icon:"ph-calendar-blank",label:"3rd Year",sub:"Year"},{icon:"ph-sun",label:"Morning",sub:"Vibe"}],
-    photo:null, color:"#14100f", photoCount:4, active:true,
+    photo:"WhatsApp Unknown 2026-03-24 at 18.58.03/WhatsApp Image 2026-03-24 at 18.56.50.jpeg",
+    photoPos:"center top", photoCount:4, active:true,
   },
 ];
 
@@ -462,7 +467,7 @@ function renderCard(el, i, isFront) {
       <div class="lbl lbl-vibe"    id="lbl-v">VIBE ✦</div>
       <div style="position:relative;width:100%;height:100%;background:${p.color||'#141414'};" onclick="onCardTap(event)">
         ${p.photo
-          ? `<img src="${p.photo}" draggable="false" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;pointer-events:none;"/>`
+          ? `<img src="${p.photo}" draggable="false" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${p.photoPos||'center top'};pointer-events:none;"/>`
           : `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><i class="ph ph-user" style="font-size:100px;color:rgba(255,255,255,0.05);"></i></div>`
         }
         <!-- gradient -->
@@ -521,7 +526,7 @@ function renderCard(el, i, isFront) {
   } else {
     el.innerHTML = `
       <div style="width:100%;height:100%;position:relative;background:${p.color||'#141414'};">
-        ${p.photo?`<img src="${p.photo}" draggable="false" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;"/>`:'' }
+        ${p.photo?`<img src="${p.photo}" draggable="false" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${p.photoPos||'center top'};"/>`:'' }
         <div style="position:absolute;inset-x:0;bottom:0;height:50%;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);"></div>
       </div>`;
   }
@@ -605,6 +610,7 @@ function onCardTap(e) {
 function openProfileExpand(p) {
   const el = document.getElementById('profile-expand');
   document.getElementById('expand-img').src = p.photo||'';
+  document.getElementById('expand-img').style.objectPosition = p.photoPos||'center top';
   document.getElementById('expand-img').style.display = p.photo?'block':'none';
   document.getElementById('expand-name').textContent = `${p.name}, ${p.age}`;
   document.getElementById('expand-res').innerHTML = `<i class="ph ph-building" style="font-size:13px;"></i> ${p.res} · ${p.room}`;
