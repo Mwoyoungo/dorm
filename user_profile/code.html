@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Connect - Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#591700",
+              "secondary-dim": "#ff7257",
+              "surface-variant": "#262626",
+              "on-tertiary": "#6c2a14",
+              "on-secondary-fixed-variant": "#a01800",
+              "inverse-on-surface": "#565555",
+              "secondary-fixed-dim": "#ffb0a0",
+              "inverse-surface": "#fcf9f8",
+              "tertiary": "#ffb199",
+              "primary": "#ff906a",
+              "on-background": "#ffffff",
+              "tertiary-dim": "#ee9073",
+              "primary-dim": "#ff7442",
+              "background": "#0e0e0e",
+              "secondary": "#ff7257",
+              "on-secondary": "#470500",
+              "on-tertiary-container": "#5f200b",
+              "secondary-fixed": "#ffc4b8",
+              "surface": "#0e0e0e",
+              "on-tertiary-fixed": "#3e0c00",
+              "inverse-primary": "#ac3500",
+              "tertiary-container": "#fe9d7f",
+              "on-error-container": "#ffa8a3",
+              "surface-container": "#1a1919",
+              "error": "#ff716c",
+              "surface-container-lowest": "#000000",
+              "error-container": "#9f0519",
+              "primary-fixed": "#ff7949",
+              "on-secondary-container": "#fff6f4",
+              "surface-dim": "#0e0e0e",
+              "on-error": "#490006",
+              "tertiary-fixed-dim": "#ee9073",
+              "on-secondary-fixed": "#6c0d00",
+              "on-tertiary-fixed-variant": "#6a2913",
+              "outline": "#767575",
+              "surface-tint": "#ff906a",
+              "tertiary-fixed": "#fe9d7f",
+              "primary-container": "#ff7949",
+              "on-surface": "#ffffff",
+              "outline-variant": "#484847",
+              "on-primary-container": "#451000",
+              "error-dim": "#d7383b",
+              "surface-bright": "#2c2c2c",
+              "secondary-container": "#b62409",
+              "on-surface-variant": "#adaaaa",
+              "surface-container-low": "#131313",
+              "surface-container-high": "#201f1f",
+              "on-primary-fixed-variant": "#551600",
+              "on-primary-fixed": "#000000",
+              "surface-container-highest": "#262626",
+              "primary-fixed-dim": "#f7652f"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0e0e0e;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0E0E0E]/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-6 py-4 w-full max-w-md mx-auto">
+<button class="hover:bg-white/10 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#FF6B35]">arrow_back</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] text-xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B35] to-[#F04E30] font-black italic">Connect</h1>
+<button class="hover:bg-white/10 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#ADAAAA]">settings</span>
+</button>
+</div>
+</header>
+<main class="max-w-md mx-auto px-6 pt-24 space-y-8">
+<!-- Profile Header -->
+<section class="flex flex-col items-center">
+<div class="relative">
+<div class="w-[100px] h-[100px] rounded-full p-1 bg-gradient-to-br from-[#FF6B35] to-[#F04E30]">
+<img alt="User Profile" class="w-full h-full object-cover rounded-full border-4 border-background" data-alt="close-up portrait of a handsome man with stylish short hair looking thoughtfully into the distance with soft urban lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOwExTEldNeSre0NG0YcgQpYV1A-5czNApUdZ0GSKJWln36TZd5TxVPtp_neqgXFUgaQ4A0Jk4OYrHo_94Z-IQh8AFhn1fyP2yr93DbK5H8x0eMddyLF-qSunjbdjDRCjkl8Hh9c8i7av0RCYPPcV5YfifNTcMOWSd86BWFYVEBiv07pS2S1q3uIHOUqfzsiyQ2YNiJfOmHtWpz9JTj-MYY01GTmTc3FMMk2d_QeOgXxOYut7so9D_zMTRgW4AmTUUhsBxKwXpUA"/>
+</div>
+<!-- Status Badge -->
+<div class="absolute bottom-1 right-1 w-6 h-6 bg-gradient-to-br from-[#FF6B35] to-[#F04E30] border-2 border-background rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(255,107,53,0.5)]">
+<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+</div>
+<div class="mt-4 text-center">
+<h2 class="font-headline text-2xl font-bold text-on-surface">Julian, 28</h2>
+<p class="font-body text-sm text-on-surface-variant flex items-center justify-center gap-1 mt-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Brooklyn, NY
+                </p>
+</div>
+</section>
+<!-- Bio Section -->
+<section class="space-y-2">
+<h3 class="text-xs font-bold uppercase tracking-widest text-[#FF6B35]">The Bio</h3>
+<p class="font-body text-[14px] leading-[1.5] text-on-surface-variant text-left">
+                Design architect by day, urban explorer by night. Looking for someone who appreciates high-contrast aesthetics and deep conversations over espresso. I believe in cinematic moments and honest connections.
+            </p>
+</section>
+<!-- Interests (Tags) -->
+<section class="space-y-3">
+<h3 class="text-xs font-bold uppercase tracking-widest text-[#FF6B35]">Interests</h3>
+<div class="flex flex-wrap gap-2">
+<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Mid-century Modern</span>
+<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Street Photography</span>
+<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Vinyl</span>
+<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Techno</span>
+<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Architecture</span>
+</div>
+</section>
+<!-- Photo Gallery -->
+<section class="space-y-3">
+<div class="flex justify-between items-end">
+<h3 class="text-xs font-bold uppercase tracking-widest text-[#FF6B35]">Moments</h3>
+<span class="text-[10px] text-on-surface-variant">3 / 6 Photos</span>
+</div>
+<div class="grid grid-cols-[1fr_1fr_0.3fr] gap-[10px]">
+<div class="aspect-square rounded-xl overflow-hidden bg-surface-container">
+<img alt="Gallery 1" class="w-full h-full object-cover" data-alt="dramatic wide shot of a valley at sunset with mountains in the background and warm golden light across the landscape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmS1Leyhj80GXzcOTpuwNDfLs-F1cTDWxTNPpkdOOPuI_X46pzbzbC0hfLdgrSjSVfZ-UsaBjAnXxsdmJ1GcTCKwCHbPD_j-zkyU-E6idMJmIcIkRknqHMHAZycO0PAEaI0iRCTqZjRiFAvQ_hLB4tcbGA8U9CQnVcpG5nZ-9e9dGUtsm3bHL_tfFf4o55vPz51hyhRKnuCRmTL9jQvjcIVhBqdKlczcMjiJD78thzCQbXbfcyqszfCBE2vTV8ZsJn1g0_8se-8A"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden bg-surface-container">
+<img alt="Gallery 2" class="w-full h-full object-cover" data-alt="shadowy silhouette of a person standing against a brightly lit modern architecture wall with geometric patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6vALarOwC9HhJdiTzdiAwwkGsnCxYNSkcmT1q-2AjLmmGmkslJ9YmtQaGZOujlRgg4kJ6rG_iSVzsEY7I4s546v5ABBi_qPRdvMZyfApCK8MzE-UizdQTx4lVKW9CAZ0ib9cBORm8Ro8P8UZgXXl7l1sD8CgtHEoYwxQBePjaqYtTene18C0IW7qL61wA-jBkQSUI7Gq-fRSagB71NHr-YhvozvMA6Sm_9FrstcG4phnfuXMALwl_llpkzcYoEInMtWCYYTNyIQ"/>
+</div>
+<button class="aspect-square rounded-xl border-2 border-dashed border-[#333] flex items-center justify-center hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined text-[#ADAAAA]">add</span>
+</button>
+</div>
+</section>
+<!-- "My Vibe" Section -->
+<section class="space-y-3 pb-10">
+<h3 class="text-xs font-bold uppercase tracking-widest text-[#FF6B35]">My Vibe</h3>
+<!-- Vibe Stack: Asymmetric layout -->
+<div class="flex flex-wrap gap-2 items-start">
+<div class="bg-gradient-to-br from-[#FF6B35] to-[#F04E30] px-5 py-2 rounded-[20px] text-xs font-bold text-white shadow-[0_4px_10px_rgba(240,78,48,0.3)]">
+                    Night Owl
+                </div>
+<div class="mt-4 bg-[#1A1A1A] border border-[#333333] px-4 py-2 rounded-[20px] text-xs font-medium text-on-surface">
+                    Experimental
+                </div>
+<div class="bg-[#1A1A1A] border border-[#333333] px-4 py-2 rounded-[20px] text-xs font-medium text-on-surface">
+                    Minimalist
+                </div>
+<div class="mt-2 bg-[#1A1A1A] border border-[#333333] px-4 py-2 rounded-[20px] text-xs font-medium text-on-surface">
+                    Coffee Snob
+                </div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-[40px] z-50 bg-[#1A1A1A]/80 backdrop-blur-[10px] shadow-[0_4px_15px_rgba(240,78,48,0.4)] max-w-md">
+<div class="flex justify-around items-center px-2 py-2">
+<!-- Discover -->
+<a class="flex flex-col items-center justify-center text-[#ADAAAA] p-3 hover:text-white transition-all active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Discover</span>
+</a>
+<!-- Matches -->
+<a class="flex flex-col items-center justify-center text-[#ADAAAA] p-3 hover:text-white transition-all active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Matches</span>
+</a>
+<!-- Chat -->
+<a class="flex flex-col items-center justify-center text-[#ADAAAA] p-3 hover:text-white transition-all active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Chat</span>
+</a>
+<!-- Profile (Active) -->
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#FF6B35] to-[#F04E30] text-white rounded-full p-3 shadow-[0_0_20px_rgba(255,107,53,0.5)] active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>
