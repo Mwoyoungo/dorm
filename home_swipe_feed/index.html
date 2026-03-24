@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch - Discover</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "on-primary": "#591700", "secondary-dim": "#ff7257", "surface-variant": "#262626",
+          "on-tertiary": "#6c2a14", "on-secondary-fixed-variant": "#a01800",
+          "inverse-on-surface": "#565555", "secondary-fixed-dim": "#ffb0a0",
+          "inverse-surface": "#fcf9f8", "tertiary": "#ffb199", "primary": "#ff906a",
+          "on-background": "#ffffff", "tertiary-dim": "#ee9073", "primary-dim": "#ff7442",
+          "background": "#0e0e0e", "secondary": "#ff7257", "on-secondary": "#470500",
+          "on-tertiary-container": "#5f200b", "secondary-fixed": "#ffc4b8",
+          "surface": "#0e0e0e", "on-tertiary-fixed": "#3e0c00", "inverse-primary": "#ac3500",
+          "tertiary-container": "#fe9d7f", "on-error-container": "#ffa8a3",
+          "surface-container": "#1a1919", "error": "#ff716c",
+          "surface-container-lowest": "#000000", "error-container": "#9f0519",
+          "primary-fixed": "#ff7949", "on-secondary-container": "#fff6f4",
+          "surface-dim": "#0e0e0e", "on-error": "#490006", "tertiary-fixed-dim": "#ee9073",
+          "on-secondary-fixed": "#6c0d00", "on-tertiary-fixed-variant": "#6a2913",
+          "outline": "#767575", "surface-tint": "#ff906a", "tertiary-fixed": "#fe9d7f",
+          "primary-container": "#ff7949", "on-surface": "#ffffff", "outline-variant": "#484847",
+          "on-primary-container": "#451000", "error-dim": "#d7383b", "surface-bright": "#2c2c2c",
+          "secondary-container": "#b62409", "on-surface-variant": "#adaaaa",
+          "surface-container-low": "#131313", "surface-container-high": "#201f1f",
+          "on-primary-fixed-variant": "#551600", "on-primary-fixed": "#000000",
+          "surface-container-highest": "#262626", "primary-fixed-dim": "#f7652f"
+        },
+        fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"], "label": ["Inter"] },
+        borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+      },
+    },
+  }
+</script>
+<style>
+  body { min-height: max(884px, 100dvh); }
+
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .icon-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  .topbar-glass { background: rgba(14,14,14,0.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+  .nav-glass { background: rgba(26,25,25,0.85); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+  .glass-action { background: rgba(255,255,255,0.13); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .intent-pill { background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .proximity-pill { background: rgba(255,255,255,0.10); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+  /* Status bar - WhatsApp vibe */
+  .status-bar { background: rgba(0,0,0,0.60); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+  /* Context switcher */
+  .ctx-active { background: linear-gradient(135deg,#FF6B35,#F04E30); color:#fff; box-shadow: 0 0 14px rgba(255,107,53,0.40); }
+  .ctx-inactive { background: #262626; color: #adaaaa; }
+
+  /* Filter pills */
+  .fp-active { background: linear-gradient(135deg,#FF6B35,#F04E30); color:#fff; }
+  .fp-inactive { background: #262626; color: #adaaaa; }
+
+  /* Filter popover sheet */
+  #filter-sheet {
+    position: fixed; inset: 0; z-index: 90;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    pointer-events: none;
+  }
+  #filter-sheet.open { pointer-events: all; }
+
+  #filter-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+    opacity: 0; transition: opacity 0.25s ease;
+  }
+  #filter-sheet.open #filter-backdrop { opacity: 1; }
+
+  #filter-panel {
+    position: relative; z-index: 1;
+    background: #131313; border-radius: 28px 28px 0 0;
+    padding: 24px 20px 40px;
+    transform: translateY(100%); transition: transform 0.30s cubic-bezier(0.32,0,0.18,1);
+    max-width: 448px; width: 100%; margin: 0 auto;
+  }
+  #filter-sheet.open #filter-panel { transform: translateY(0); }
+
+  /* Card stack */
+  .card-wrap { position: relative; width: 100%; height: 560px; touch-action: none; }
+
+  .card-slot { position: absolute; inset: 0; border-radius: 40px; overflow: hidden; will-change: transform; transition: transform 0.3s ease, opacity 0.3s ease; }
+  .card-slot.c3 { transform: scale(0.88) translateY(24px); opacity: 0.35; filter: blur(2px); z-index: 1; }
+  .card-slot.c2 { transform: scale(0.94) translateY(12px); opacity: 0.65; z-index: 2; }
+  .card-slot.c1 { transform: scale(1) translateY(0); opacity: 1; z-index: 3; cursor: grab; }
+  .card-slot.c1:active { cursor: grabbing; }
+
+  /* Swipe labels */
+  .swipe-label-connect {
+    position: absolute; top: 28px; left: 20px; z-index: 10;
+    border: 3px solid #4ade80; color: #4ade80;
+    font-family: 'Plus Jakarta Sans'; font-weight: 900; font-size: 22px;
+    letter-spacing: 0.12em; padding: 4px 14px; border-radius: 8px;
+    opacity: 0; transform: rotate(-15deg); pointer-events: none;
+    text-shadow: 0 0 12px rgba(74,222,128,0.5);
+  }
+  .swipe-label-pass {
+    position: absolute; top: 28px; right: 20px; z-index: 10;
+    border: 3px solid #f87171; color: #f87171;
+    font-family: 'Plus Jakarta Sans'; font-weight: 900; font-size: 22px;
+    letter-spacing: 0.12em; padding: 4px 14px; border-radius: 8px;
+    opacity: 0; transform: rotate(15deg); pointer-events: none;
+    text-shadow: 0 0 12px rgba(248,113,113,0.5);
+  }
+  .swipe-label-vibe {
+    position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+    z-index: 10; border: 3px solid #a78bfa; color: #a78bfa;
+    font-family: 'Plus Jakarta Sans'; font-weight: 900; font-size: 22px;
+    letter-spacing: 0.12em; padding: 4px 14px; border-radius: 8px;
+    opacity: 0; pointer-events: none;
+    text-shadow: 0 0 12px rgba(167,139,250,0.5);
+  }
+
+  /* Action buttons */
+  .connect-btn {
+    background: linear-gradient(135deg,#FF6B35,#F04E30);
+    box-shadow: 0 0 26px rgba(255,107,53,0.55), 0 4px 16px rgba(240,78,48,0.30);
+  }
+  .vibe-btn { background: rgba(167,139,250,0.18); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .join-btn { background: rgba(74,222,128,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+  /* Button pulse */
+  @keyframes btn-pulse { 0%{transform:scale(1)} 40%{transform:scale(0.85)} 70%{transform:scale(1.10)} 100%{transform:scale(1)} }
+  .btn-pulse { animation: btn-pulse 0.30s ease-out forwards; }
+
+  /* Fly-off animations */
+  @keyframes fly-right { to { transform: translateX(120%) rotate(30deg); opacity: 0; } }
+  @keyframes fly-left  { to { transform: translateX(-120%) rotate(-30deg); opacity: 0; } }
+  @keyframes fly-up    { to { transform: translateY(-120%) scale(0.8); opacity: 0; } }
+  .fly-right { animation: fly-right 0.42s ease-in forwards; }
+  .fly-left  { animation: fly-left  0.42s ease-in forwards; }
+  .fly-up    { animation: fly-up    0.42s ease-in forwards; }
+
+  /* Promote cards in */
+  @keyframes promote-c2 { from { transform: scale(0.94) translateY(12px); opacity: 0.65; } to { transform: scale(1) translateY(0); opacity: 1; } }
+  @keyframes promote-c3 { from { transform: scale(0.88) translateY(24px); opacity: 0.35; filter:blur(2px); } to { transform: scale(0.94) translateY(12px); opacity: 0.65; filter:blur(0); } }
+
+  /* Toast */
+  #toast {
+    position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: rgba(26,25,25,0.95); backdrop-filter: blur(16px);
+    color: #fff; font-family: 'Inter'; font-size: 13px; font-weight: 600;
+    padding: 10px 20px; border-radius: 999px;
+    opacity: 0; transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none; z-index: 200; white-space: nowrap;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Empty state */
+  #empty-state { display: none; flex-direction: column; align-items: center; justify-content: center; height: 560px; gap: 12px; }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* gradient text */
+  .grad-text { background: linear-gradient(135deg,#FF6B35,#F04E30); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+  /* Profile dot indicator */
+  .dot-active { background: linear-gradient(135deg,#FF6B35,#F04E30); }
+  .dot-inactive { background: rgba(255,255,255,0.25); }
+</style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen overflow-x-hidden select-none">
+
+<!-- ══════════════════════ TOP BAR ══════════════════════ -->
+<header class="fixed top-0 w-full z-50 topbar-glass">
+  <div class="flex justify-between items-center px-5 py-3.5 w-full max-w-md mx-auto">
+
+    <div class="w-9 h-9 rounded-full overflow-hidden ring-2 ring-primary/60 shrink-0">
+      <img alt="You" class="w-full h-full object-cover"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJj7WpDjwVL8iHB7t21wVS_lvzAeo7-esCI2IYRACVgHhdQLuLAGSEeMmHq-Foo23v0B0TcaUpOetldiVnXys01B2DqOFPhlLsfI2-DTOX7hbqxZMtfVuOJFRwvQX7IeWUwIN1ecZepP1kBuCwMEeVlbvW7zyHVHSe4I3XKmFGjweGWHKI9PlNUYnXJR9-VjC8QHJJHOdmgBlS5DBtX6H_bz3koNqE8IuQqW53lkfn331t1BgXh6w9axPZmvS_lvlOQY5rIxMomQ"/>
+    </div>
+
+    <h1 class="font-headline text-xl font-black italic tracking-tight grad-text select-none">Stitch</h1>
+
+    <div class="flex items-center gap-1">
+      <!-- Notification bell with badge -->
+      <button id="bell-btn" class="relative text-on-surface-variant hover:text-white transition-colors p-2 rounded-full active:scale-90 duration-150" onclick="showToast('3 new waves 👋')">
+        <span class="material-symbols-outlined" style="font-size:22px;">notifications</span>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-gradient-to-br from-[#FF6B35] to-[#F04E30]"></span>
+      </button>
+      <!-- Filter / tune — opens sheet -->
+      <button class="text-on-surface-variant hover:text-white transition-colors p-2 rounded-full active:scale-90 duration-150" onclick="openFilterSheet()">
+        <span class="material-symbols-outlined" style="font-size:22px;">tune</span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<!-- context switcher removed — lives in filter sheet now -->
+
+<!-- ══════════════════════ MAIN ══════════════════════ -->
+<main class="pt-[72px] pb-36 px-4 flex flex-col items-center max-w-md mx-auto">
+
+  <!-- ── CARD STACK ── -->
+  <div class="card-wrap" id="card-stack">
+
+    <!-- EMPTY STATE (shown when all cards swiped) -->
+    <div id="empty-state" class="flex flex-col items-center justify-center h-full gap-4">
+      <span class="material-symbols-outlined grad-text" style="font-size:64px;">sentiment_satisfied</span>
+      <p class="font-headline text-xl font-bold text-white">You've seen everyone</p>
+      <p class="text-on-surface-variant text-sm text-center">Check back later or expand your search</p>
+      <button class="mt-2 px-6 py-2.5 rounded-full font-semibold text-sm text-white" style="background:linear-gradient(135deg,#FF6B35,#F04E30);" onclick="resetCards()">Start over</button>
+    </div>
+
+    <!-- ░░░░ CARD SLOT — c3 (back, placeholder) ░░░░ -->
+    <div class="card-slot c3" id="slot-c3">
+      <div class="w-full h-full bg-surface-container-low flex items-end pb-8 px-6">
+        <div class="w-full">
+          <div class="w-24 h-3 rounded-full bg-surface-bright mb-2"></div>
+          <div class="w-16 h-2 rounded-full bg-surface-bright/50"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ░░░░ CARD SLOT — c2 (middle, placeholder) ░░░░ -->
+    <div class="card-slot c2" id="slot-c2">
+      <div class="w-full h-full bg-surface-container flex items-end pb-8 px-6">
+        <div class="w-full">
+          <div class="w-28 h-3 rounded-full bg-surface-bright mb-2"></div>
+          <div class="w-20 h-2 rounded-full bg-surface-bright/50"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ░░░░ CARD SLOT — c1 (FRONT) ░░░░ -->
+    <div class="card-slot c1" id="slot-c1">
+      <!-- swipe labels -->
+      <div class="swipe-label-connect" id="lbl-connect">CONNECT</div>
+      <div class="swipe-label-pass"    id="lbl-pass">PASS</div>
+      <div class="swipe-label-vibe"    id="lbl-vibe">VIBE ✦</div>
+
+      <!-- card content injected by JS -->
+    </div>
+
+  </div>
+  <!-- end card stack -->
+
+  <!-- ── PHOTO DOTS ── -->
+  <div class="flex gap-1.5 mt-3" id="photo-dots"></div>
+
+  <!-- ── BIO PEEK ── -->
+  <div class="w-full mt-5 space-y-3" id="bio-peek">
+    <div class="bg-surface-container-low p-5 rounded-[20px]">
+      <h3 class="grad-text font-headline text-[10px] font-bold uppercase tracking-widest mb-2">My Vibe</h3>
+      <p class="text-on-surface-variant text-sm leading-relaxed" id="bio-text">Loading...</p>
+    </div>
+    <div class="flex gap-3" id="stat-cards"></div>
+  </div>
+
+</main>
+
+<!-- ══════════════════════ BOTTOM NAV ══════════════════════ -->
+<nav class="fixed bottom-5 left-1/2 -translate-x-1/2 w-[90%] rounded-[40px] z-50 nav-glass shadow-[0_4px_20px_rgba(240,78,48,0.25)] max-w-md">
+  <div class="flex justify-around items-center px-2 py-2">
+    <a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#FF6B35] to-[#F04E30] text-white rounded-full p-3 shadow-[0_0_18px_rgba(255,107,53,0.45)] active:scale-90 duration-200" href="#">
+      <span class="material-symbols-outlined icon-filled" style="font-size:22px;">explore</span>
+      <span class="font-label text-[10px] font-semibold tracking-wide uppercase mt-0.5">Discover</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:text-white transition-all active:scale-90 duration-200 relative" href="#" onclick="showToast('2 new connects 🔥'); return false;">
+      <span class="material-symbols-outlined" style="font-size:22px;">favorite</span>
+      <span class="font-label text-[10px] font-semibold tracking-wide uppercase mt-0.5">Connects</span>
+      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#FF6B35]"></span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:text-white transition-all active:scale-90 duration-200" href="#" onclick="showToast('Chat coming soon'); return false;">
+      <span class="material-symbols-outlined" style="font-size:22px;">forum</span>
+      <span class="font-label text-[10px] font-semibold tracking-wide uppercase mt-0.5">Chat</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:text-white transition-all active:scale-90 duration-200" href="../user_profile/code.html">
+      <span class="material-symbols-outlined" style="font-size:22px;">person</span>
+      <span class="font-label text-[10px] font-semibold tracking-wide uppercase mt-0.5">Profile</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ══════════════════════ FILTER SHEET ══════════════════════ -->
+<div id="filter-sheet" onclick="handleSheetClick(event)">
+  <div id="filter-backdrop"></div>
+  <div id="filter-panel">
+
+    <!-- Handle -->
+    <div style="width:36px;height:4px;border-radius:999px;background:#333;margin:0 auto 24px;"></div>
+
+    <!-- Section: Show me -->
+    <p style="color:#adaaaa;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;font-family:Inter;margin-bottom:10px;">Show me</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+      <button class="ctx-active  shrink-0 px-5 py-2 rounded-full text-sm font-semibold font-label" onclick="setContext(this)">My Block</button>
+      <button class="ctx-inactive shrink-0 px-5 py-2 rounded-full text-sm font-semibold font-label" onclick="setContext(this)">Campus</button>
+      <button class="ctx-inactive shrink-0 px-5 py-2 rounded-full text-sm font-semibold font-label" onclick="setContext(this)">Everyone</button>
+    </div>
+
+    <!-- Section: Looking for -->
+    <p style="color:#adaaaa;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;font-family:Inter;margin-bottom:10px;">Looking for</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;">
+      <button class="fp-active  shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Everyone</button>
+      <button class="fp-inactive shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Hang</button>
+      <button class="fp-inactive shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Study</button>
+      <button class="fp-inactive shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Date</button>
+      <button class="fp-inactive shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Events</button>
+    </div>
+
+    <!-- Apply -->
+    <button onclick="closeFilterSheet()" style="width:100%;padding:14px;border-radius:999px;border:none;cursor:pointer;font-family:'Plus Jakarta Sans';font-weight:700;font-size:15px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);box-shadow:0 0 20px rgba(255,107,53,0.35);">
+      Apply filters
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════ TOAST ══════════════════════ -->
+<div id="toast"></div>
+
+<!-- ══════════════════════ JS ══════════════════════ -->
+<script>
+// ─────────────────────────────────────────────────────────────
+// DATA — SA student profiles, Pretoria residences
+// ─────────────────────────────────────────────────────────────
+const profiles = [
+  {
+    name: "Naledi", age: 21,
+    course: "Law", year: "3rd Year",
+    res: "Sonop Res", room: "Room 214",
+    intents: ["down to hang", "study buddy"],
+    status: "📚 In the library, someone bring snacks",
+    vibe: "Moot court by day, bad reality TV by night. Will fight you about anything except pizza toppings.",
+    stats: [
+      { icon: "balance",       label: "Law",      sub: "Course" },
+      { icon: "calendar_today",label: "3rd Year",  sub: "Year" },
+      { icon: "bedtime",       label: "Night Owl", sub: "Vibe" },
+    ],
+    photo: "WhatsApp Image 2026-02-03 at 1.55.06 PM (1).jpeg",
+    photoCount: 3,
+  },
+  {
+    name: "Sipho", age: 22,
+    course: "Engineering", year: "2nd Year",
+    res: "Kollege Res", room: "Room 08",
+    intents: ["gym partner", "open to dating"],
+    status: "🏋️ Gym session done. Anyone want to grab a kota?",
+    vibe: "Mechanical engineering but my real passion is braai science. Weekends are for the boys... and maybe you.",
+    stats: [
+      { icon: "precision_manufacturing", label: "Engineering", sub: "Course" },
+      { icon: "calendar_today",           label: "2nd Year",    sub: "Year" },
+      { icon: "fitness_center",           label: "Gym Rat",     sub: "Vibe" },
+    ],
+    photo: null,
+    color: "#1a1919",
+    photoCount: 2,
+  },
+  {
+    name: "Amahle", age: 20,
+    course: "Architecture", year: "1st Year",
+    res: "Erika Res", room: "Room 112",
+    intents: ["creative collab", "down to hang"],
+    status: "🎨 Busy with a design brief but my door is open",
+    vibe: "First year but already decorated my room better than yours. Sketchbook always in hand.",
+    stats: [
+      { icon: "architecture",  label: "Architecture", sub: "Course" },
+      { icon: "calendar_today",label: "1st Year",     sub: "Year" },
+      { icon: "palette",       label: "Creative",     sub: "Vibe" },
+    ],
+    photo: null,
+    color: "#131313",
+    photoCount: 5,
+  },
+  {
+    name: "Thabo", age: 23,
+    course: "Computer Sci", year: "4th Year",
+    res: "Loftus Res", room: "Room 303",
+    intents: ["study buddy", "gaming"],
+    status: "💻 Debugging since 2pm. Send help (or Nandos)",
+    vibe: "Final year dev. Built 3 apps, none of them finished. Looking for someone to procrastinate productively with.",
+    stats: [
+      { icon: "code",           label: "CS",       sub: "Course" },
+      { icon: "calendar_today", label: "4th Year", sub: "Year" },
+      { icon: "terminal",       label: "Dev Mode", sub: "Vibe" },
+    ],
+    photo: null,
+    color: "#0f0f0f",
+    photoCount: 1,
+  },
+  {
+    name: "Lerato", age: 21,
+    course: "Psychology", year: "3rd Year",
+    res: "Minerva Res", room: "Room 07",
+    intents: ["deep convos", "open to dating"],
+    status: "☕ At the Hatfield Mugg & Bean if anyone wants to join",
+    vibe: "Psych student who will absolutely analyse what you just said. Certified empath. Terrible at keeping plants alive.",
+    stats: [
+      { icon: "psychology",     label: "Psychology", sub: "Course" },
+      { icon: "calendar_today", label: "3rd Year",   sub: "Year" },
+      { icon: "wb_sunny",       label: "Morning",    sub: "Vibe" },
+    ],
+    photo: null,
+    color: "#161616",
+    photoCount: 4,
+  },
+];
+
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+let currentIndex = 0; // which profile is on c1
+let isDragging = false, startX = 0, startY = 0, currentX = 0, currentY = 0;
+let toastTimer = null;
+
+const slot1 = document.getElementById('slot-c1');
+const slot2 = document.getElementById('slot-c2');
+const slot3 = document.getElementById('slot-c3');
+const lblConnect = document.getElementById('lbl-connect');
+const lblPass    = document.getElementById('lbl-pass');
+const lblVibe    = document.getElementById('lbl-vibe');
+const emptyState = document.getElementById('empty-state');
+const photoDots  = document.getElementById('photo-dots');
+const bioText    = document.getElementById('bio-text');
+const statCards  = document.getElementById('stat-cards');
+
+// ─────────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────────
+function renderCard(slotEl, profileIdx, slotClass) {
+  if (profileIdx >= profiles.length) {
+    slotEl.innerHTML = '';
+    slotEl.style.visibility = 'hidden';
+    return;
+  }
+  slotEl.style.visibility = 'visible';
+  const p = profiles[profileIdx];
+
+  if (slotClass === 'c1') {
+    slotEl.innerHTML = `
+      <div class="swipe-label-connect" id="lbl-connect">CONNECT</div>
+      <div class="swipe-label-pass"    id="lbl-pass">PASS</div>
+      <div class="swipe-label-vibe"    id="lbl-vibe">VIBE ✦</div>
+
+      <div class="w-full h-full relative" style="background:${p.color || '#1a1919'};">
+
+        ${p.photo
+          ? `<img src="${p.photo}" alt="${p.name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;" draggable="false"/>`
+          : `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined" style="font-size:96px;color:rgba(255,255,255,0.07);">person</span></div>`
+        }
+
+        <!-- Bottom gradient — deep enough for text legibility -->
+        <div style="position:absolute;inset-x:0;bottom:0;height:55%;background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.5) 50%,transparent 100%);"></div>
+
+        <!-- Top row: res badge + photo count -->
+        <div style="position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+          <div class="proximity-pill" style="display:flex;align-items:center;gap:4px;padding:4px 12px;border-radius:999px;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="font-size:12px;color:rgba(255,255,255,0.7);">apartment</span>
+            <span style="color:rgba(255,255,255,0.85);font-size:11px;font-weight:500;font-family:Inter;">${p.res}</span>
+          </div>
+          <div class="proximity-pill" style="display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;">
+            <span class="material-symbols-outlined" style="font-size:12px;color:rgba(255,255,255,0.6);">photo_library</span>
+            <span style="color:rgba(255,255,255,0.65);font-size:11px;font-family:Inter;">${p.photoCount}</span>
+          </div>
+        </div>
+
+        <!-- Status bar — WhatsApp vibe -->
+        <div style="position:absolute;top:52px;left:16px;right:16px;">
+          <div class="status-bar" style="border-radius:999px;padding:6px 14px;display:flex;align-items:center;gap:8px;">
+            <span style="width:7px;height:7px;border-radius:999px;background:#4ade80;flex-shrink:0;"></span>
+            <span style="color:rgba(255,255,255,0.88);font-size:12px;font-family:Inter;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.status}</span>
+          </div>
+        </div>
+
+        <!-- Bottom: name + intents only -->
+        <div style="position:absolute;bottom:20px;left:20px;right:68px;">
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+            ${p.intents.map(i => `<span class="intent-pill" style="color:#fff;font-size:11px;font-family:Inter;font-weight:500;padding:4px 10px;border-radius:999px;">${i}</span>`).join('')}
+          </div>
+          <h2 style="color:#fff;font-family:'Plus Jakarta Sans';font-size:28px;font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin:0;">${p.name}, ${p.age}</h2>
+        </div>
+
+        <!-- Side action bar -->
+        <div style="position:absolute;right:12px;bottom:20px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <button class="glass-action" style="width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fff;border:none;cursor:pointer;transition:transform 0.15s;" onclick="triggerWave()" title="Wave" onmousedown="this.style.transform='scale(0.88)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.88)'" ontouchend="this.style.transform='scale(1)'">
+            <span class="material-symbols-outlined" style="font-size:19px;">waving_hand</span>
+          </button>
+          <button class="connect-btn" style="width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fff;border:none;cursor:pointer;transition:transform 0.15s;" onclick="triggerConnect()" title="Connect" onmousedown="this.style.transform='scale(0.88)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.88)'" ontouchend="this.style.transform='scale(1)'">
+            <span class="material-symbols-outlined icon-filled" style="font-size:24px;">favorite</span>
+          </button>
+          <button class="join-btn" style="width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#4ade80;border:none;cursor:pointer;transition:transform 0.15s;" onclick="triggerJoin()" title="Join" onmousedown="this.style.transform='scale(0.88)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.88)'" ontouchend="this.style.transform='scale(1)'">
+            <span class="material-symbols-outlined" style="font-size:19px;">group_add</span>
+          </button>
+          <button class="vibe-btn" style="width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#a78bfa;border:none;cursor:pointer;transition:transform 0.15s;" onclick="triggerVibe()" title="Vibe" onmousedown="this.style.transform='scale(0.88)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.88)'" ontouchend="this.style.transform='scale(1)'">
+            <span class="material-symbols-outlined" style="font-size:19px;">auto_awesome</span>
+          </button>
+        </div>
+      </div>
+    `;
+    // re-grab label refs after re-render
+    setupSwipe();
+    updateBio(p);
+    renderDots(p);
+  } else {
+    const nextP = profiles[profileIdx];
+    slotEl.innerHTML = `
+      <div style="width:100%;height:100%;position:relative;background:${nextP?.color || '#131313'};">
+        ${nextP?.photo ? `<img src="${nextP.photo}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;" draggable="false"/>` : ''}
+        <div style="position:absolute;inset-x:0;bottom:0;height:50%;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);"></div>
+        <div style="position:absolute;bottom:24px;left:20px;">
+          <div style="width:80px;height:10px;border-radius:999px;background:rgba(255,255,255,0.08);margin-bottom:8px;"></div>
+          <div style="width:56px;height:8px;border-radius:999px;background:rgba(255,255,255,0.04);"></div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function updateBio(p) {
+  bioText.textContent = p.vibe;
+  statCards.innerHTML = p.stats.map(s => `
+    <div class="bg-surface-container-low flex-1 p-4 rounded-[20px] flex flex-col items-center gap-1.5">
+      <span class="material-symbols-outlined text-primary" style="font-size:19px;">${s.icon}</span>
+      <span class="text-[11px] text-on-surface-variant font-label font-medium text-center">${s.label}</span>
+      <span class="text-[10px] text-on-surface-variant/45 font-label">${s.sub}</span>
+    </div>
+  `).join('');
+}
+
+function renderDots(p) {
+  photoDots.innerHTML = Array.from({length: p.photoCount}, (_, i) =>
+    `<div class="w-1.5 h-1.5 rounded-full ${i === 0 ? 'dot-active w-4' : 'dot-inactive'} transition-all duration-300"></div>`
+  ).join('');
+}
+
+function initCards() {
+  slot1.style.visibility = 'visible';
+  slot2.style.visibility = 'visible';
+  slot3.style.visibility = 'visible';
+  emptyState.style.display = 'none';
+  renderCard(slot1, currentIndex,     'c1');
+  renderCard(slot2, currentIndex + 1, 'c2');
+  renderCard(slot3, currentIndex + 2, 'c3');
+}
+
+// ─────────────────────────────────────────────────────────────
+// SWIPE DRAG
+// ─────────────────────────────────────────────────────────────
+function setupSwipe() {
+  slot1.addEventListener('mousedown',  onDragStart, { passive: true });
+  slot1.addEventListener('touchstart', onDragStart, { passive: true });
+  window.addEventListener('mousemove',  onDragMove, { passive: true });
+  window.addEventListener('touchmove',  onDragMove, { passive: true });
+  window.addEventListener('mouseup',   onDragEnd);
+  window.addEventListener('touchend',  onDragEnd);
+}
+
+function onDragStart(e) {
+  if (currentIndex >= profiles.length) return;
+  isDragging = true;
+  const pt = e.touches ? e.touches[0] : e;
+  startX = pt.clientX; startY = pt.clientY;
+  slot1.style.transition = 'none';
+}
+
+function onDragMove(e) {
+  if (!isDragging) return;
+  const pt = e.touches ? e.touches[0] : e;
+  currentX = pt.clientX - startX;
+  currentY = pt.clientY - startY;
+
+  const rot = currentX * 0.08;
+  slot1.style.transform = `translateX(${currentX}px) translateY(${currentY}px) rotate(${rot}deg)`;
+
+  // swipe labels
+  const threshX = 60, threshY = -80;
+  const lc = document.getElementById('lbl-connect');
+  const lp = document.getElementById('lbl-pass');
+  const lv = document.getElementById('lbl-vibe');
+  if (lc) lc.style.opacity = currentX > threshX ? Math.min((currentX - threshX) / 60, 1) : 0;
+  if (lp) lp.style.opacity = currentX < -threshX ? Math.min((-currentX - threshX) / 60, 1) : 0;
+  if (lv) lv.style.opacity = currentY < threshY ? Math.min((-currentY + threshY) / 60, 1) : 0;
+}
+
+function onDragEnd() {
+  if (!isDragging) return;
+  isDragging = false;
+  slot1.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+
+  const THRESH_X = 100, THRESH_Y = -100;
+  if (currentX > THRESH_X)       { triggerConnect(); }
+  else if (currentX < -THRESH_X) { triggerPass(); }
+  else if (currentY < THRESH_Y)  { triggerVibe(); }
+  else {
+    // snap back
+    slot1.style.transform = 'scale(1) translateY(0)';
+    const lc = document.getElementById('lbl-connect');
+    const lp = document.getElementById('lbl-pass');
+    const lv = document.getElementById('lbl-vibe');
+    if (lc) lc.style.opacity = 0;
+    if (lp) lp.style.opacity = 0;
+    if (lv) lv.style.opacity = 0;
+  }
+  currentX = 0; currentY = 0;
+}
+
+// ─────────────────────────────────────────────────────────────
+// ACTIONS
+// ─────────────────────────────────────────────────────────────
+function pulsebtn(id) {
+  const b = document.getElementById(id);
+  if (!b) return;
+  b.classList.remove('btn-pulse');
+  void b.offsetWidth;
+  b.classList.add('btn-pulse');
+  setTimeout(() => b.classList.remove('btn-pulse'), 350);
+}
+
+function advanceCards(flyClass, toastMsg) {
+  if (currentIndex >= profiles.length) return;
+  pulsebtn('btn-' + (flyClass === 'fly-right' ? 'connect' : flyClass === 'fly-left' ? 'pass' : flyClass === 'fly-up' ? 'vibe' : 'wave'));
+
+  // Hide labels
+  const lc = document.getElementById('lbl-connect');
+  const lp = document.getElementById('lbl-pass');
+  const lv = document.getElementById('lbl-vibe');
+  if (lc) { lc.style.opacity = flyClass === 'fly-right' ? 1 : 0; }
+  if (lp) { lp.style.opacity = flyClass === 'fly-left'  ? 1 : 0; }
+  if (lv) { lv.style.opacity = flyClass === 'fly-up'    ? 1 : 0; }
+
+  slot1.classList.add(flyClass);
+  showToast(toastMsg);
+
+  setTimeout(() => {
+    currentIndex++;
+    slot1.classList.remove(flyClass);
+    slot1.style.transform = 'scale(1) translateY(0)';
+    slot1.style.transition = '';
+
+    if (currentIndex >= profiles.length) {
+      // All swiped
+      slot1.innerHTML = '';
+      slot2.innerHTML = '';
+      slot3.innerHTML = '';
+      slot1.style.visibility = 'hidden';
+      slot2.style.visibility = 'hidden';
+      slot3.style.visibility = 'hidden';
+      emptyState.style.display = 'flex';
+      photoDots.innerHTML = '';
+      bioText.textContent = '';
+      statCards.innerHTML = '';
+      return;
+    }
+
+    renderCard(slot1, currentIndex,     'c1');
+    renderCard(slot2, currentIndex + 1, 'c2');
+    renderCard(slot3, currentIndex + 2, 'c3');
+  }, 440);
+}
+
+function triggerConnect() { advanceCards('fly-right', `💛 Connected with ${profiles[currentIndex]?.name}!`); }
+function triggerPass()    { advanceCards('fly-left',  `Passed`); }
+function triggerVibe()    { advanceCards('fly-up',    `✨ Vibed with ${profiles[currentIndex]?.name}!`); }
+
+function triggerWave() {
+  pulsebtn('btn-wave');
+  showToast(`👋 Waved at ${profiles[currentIndex]?.name}`);
+  // wave doesn't advance — it's a soft non-committal hello
+  setTimeout(() => advanceCards('fly-right', `👋 Wave sent!`), 400);
+}
+
+function triggerJoin() {
+  pulsebtn('btn-join');
+  const p = profiles[currentIndex];
+  if (p) showToast(`🟢 Joining ${p.name}'s plan!`);
+  setTimeout(() => advanceCards('fly-right', `You're in!`), 400);
+}
+
+// ─────────────────────────────────────────────────────────────
+// UI HELPERS
+// ─────────────────────────────────────────────────────────────
+function setContext(clicked) {
+  // only toggle within same group (ctx)
+  clicked.closest('div').querySelectorAll('.ctx-active,.ctx-inactive').forEach(el => {
+    el.classList.replace('ctx-active','ctx-inactive');
+  });
+  clicked.classList.replace('ctx-inactive','ctx-active');
+}
+
+function setFilter(clicked) {
+  clicked.closest('div').querySelectorAll('.fp-active,.fp-inactive').forEach(el => {
+    el.classList.replace('fp-active','fp-inactive');
+  });
+  clicked.classList.replace('fp-inactive','fp-active');
+}
+
+function openFilterSheet() {
+  document.getElementById('filter-sheet').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFilterSheet() {
+  document.getElementById('filter-sheet').classList.remove('open');
+  document.body.style.overflow = '';
+  // read active selections and show toast
+  const ctx = document.querySelector('#filter-panel .ctx-active')?.textContent?.trim() || '';
+  const flt = document.querySelector('#filter-panel .fp-active')?.textContent?.trim() || '';
+  showToast(`${ctx} · ${flt}`);
+}
+
+function handleSheetClick(e) {
+  if (e.target === document.getElementById('filter-backdrop')) closeFilterSheet();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function resetCards() {
+  currentIndex = 0;
+  initCards();
+}
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+initCards();
+</script>
+</body>
+</html>
