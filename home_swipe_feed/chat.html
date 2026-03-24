@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch - Chat</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css"/>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0;}
+  body{min-height:100dvh;font-family:'Inter',sans-serif;background:#0e0e0e;color:#fff;overflow:hidden;display:flex;flex-direction:column;}
+  .glass-top{background:rgba(14,14,14,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+  .glass-nav{background:rgba(20,19,19,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+  .grad{background:linear-gradient(135deg,#FF6B35,#F04E30);}
+  .grad-text{background:linear-gradient(135deg,#FF6B35,#F04E30);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+  /* Thread list */
+  .thread{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;transition:background 0.15s;border-radius:16px;}
+  .thread:active{background:#131313;}
+  .avatar{width:52px;height:52px;border-radius:999px;overflow:hidden;flex-shrink:0;position:relative;}
+  .avatar img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+  .avatar-placeholder{width:100%;height:100%;background:#1e1e1e;display:flex;align-items:center;justify-content:center;}
+  .online-dot{position:absolute;bottom:1px;right:1px;width:12px;height:12px;border-radius:999px;background:#4ade80;border:2px solid #0e0e0e;}
+
+  /* Conversation view */
+  #convo-view{position:fixed;inset:0;background:#0e0e0e;z-index:100;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.32s cubic-bezier(0.32,0,0.18,1);}
+  #convo-view.open{transform:translateX(0);}
+
+  /* Messages */
+  .msg-wrap{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;}
+  .msg-wrap::-webkit-scrollbar{display:none;}
+  .bubble{max-width:72%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5;word-break:break-word;}
+  .bubble-them{background:#1a1919;color:#fff;border-bottom-left-radius:4px;align-self:flex-start;}
+  .bubble-me{background:linear-gradient(135deg,#FF6B35,#F04E30);color:#fff;border-bottom-right-radius:4px;align-self:flex-end;}
+  .bubble-time{font-size:10px;color:#484847;font-family:'Inter';margin-top:2px;}
+  .bubble-time.right{text-align:right;}
+
+  /* Input bar */
+  .input-bar{padding:12px 16px;display:flex;align-items:center;gap:10px;background:rgba(14,14,14,0.95);border-top:1px solid #131313;}
+  .input-bar input{flex:1;background:#131313;border:none;border-radius:999px;padding:11px 16px;color:#fff;font-family:'Inter';font-size:14px;outline:none;}
+  .input-bar input::placeholder{color:#484847;}
+  .send-btn{width:42px;height:42px;border-radius:999px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FF6B35,#F04E30);color:#fff;flex-shrink:0;}
+
+  @keyframes ring-pulse{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,0.7)}60%{box-shadow:0 0 0 5px rgba(74,222,128,0)}}
+  .active-pulse{animation:ring-pulse 2s ease-out infinite;}
+
+  #toast{position:fixed;bottom:108px;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(20,19,19,0.96);backdrop-filter:blur(16px);color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;padding:10px 20px;border-radius:999px;opacity:0;transition:opacity 0.22s,transform 0.22s;pointer-events:none;z-index:999;white-space:nowrap;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR (thread list) -->
+<header class="glass-top" style="flex-shrink:0;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:448px;margin:0 auto;">
+    <a href="index.html" style="color:#adaaaa;display:flex;align-items:center;padding:6px;border-radius:999px;">
+      <i class="ph ph-arrow-left" style="font-size:22px;"></i>
+    </a>
+    <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;font-style:italic;letter-spacing:-0.02em;" class="grad-text">Messages</h1>
+    <button onclick="showToast('New message coming soon')" style="background:none;border:none;cursor:pointer;color:#adaaaa;padding:6px;">
+      <i class="ph ph-pencil-simple" style="font-size:22px;"></i>
+    </button>
+  </div>
+</header>
+
+<!-- THREAD LIST -->
+<div style="flex:1;overflow-y:auto;max-width:448px;width:100%;margin:0 auto;padding:8px 8px 120px;">
+
+  <!-- Search -->
+  <div style="margin:4px 8px 12px;background:#131313;border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+    <i class="ph ph-magnifying-glass" style="font-size:18px;color:#484847;"></i>
+    <input placeholder="Search messages..." style="background:none;border:none;color:#fff;font-family:'Inter';font-size:14px;outline:none;width:100%;" oninput="filterThreads(this.value)"/>
+  </div>
+
+  <div id="thread-list">
+    <!-- Threads injected by JS -->
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="glass-nav" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);border-radius:999px;z-index:50;box-shadow:0 2px 20px rgba(240,78,48,0.18);padding:5px 8px;">
+  <div style="display:flex;align-items:center;gap:2px;">
+    <a href="index.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-compass" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Discover</span>
+    </a>
+    <a href="connects.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-heart" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Connects</span>
+    </a>
+    <a href="chat.html" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#fff;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph-fill ph-chat-circle-dots" style="font-size:19px;filter:drop-shadow(0 0 5px rgba(255,107,53,0.8));"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Chat</span>
+      <span style="position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:14px;height:2.5px;border-radius:999px;background:linear-gradient(135deg,#FF6B35,#F04E30);"></span>
+    </a>
+    <a href="../user_profile/code.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-user" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Profile</span>
+    </a>
+  </div>
+</nav>
+
+<!-- CONVERSATION VIEW -->
+<div id="convo-view">
+  <!-- Convo top bar -->
+  <div class="glass-top" style="flex-shrink:0;">
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;max-width:448px;margin:0 auto;">
+      <button onclick="closeConvo()" style="background:none;border:none;cursor:pointer;color:#adaaaa;padding:4px;">
+        <i class="ph ph-arrow-left" style="font-size:22px;"></i>
+      </button>
+      <div id="convo-avatar" class="avatar" style="width:40px;height:40px;cursor:pointer;" onclick="showToast('View profile')"></div>
+      <div style="flex:1;">
+        <p id="convo-name" style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;"></p>
+        <p id="convo-sub"  style="font-size:11px;color:#adaaaa;font-family:'Inter';margin-top:1px;"></p>
+      </div>
+      <button onclick="showToast('More options coming soon')" style="background:none;border:none;cursor:pointer;color:#adaaaa;">
+        <i class="ph ph-dots-three-vertical" style="font-size:22px;"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Status banner -->
+  <div id="convo-status-bar" style="background:#131313;padding:8px 20px;display:flex;align-items:center;gap:8px;max-width:448px;width:100%;margin:0 auto;">
+    <span style="width:6px;height:6px;border-radius:999px;background:#4ade80;flex-shrink:0;"></span>
+    <p id="convo-status" style="font-size:12px;color:rgba(255,255,255,0.7);font-family:'Inter';overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></p>
+  </div>
+
+  <!-- Messages -->
+  <div class="msg-wrap" id="msg-wrap"></div>
+
+  <!-- Input -->
+  <div class="input-bar" style="max-width:448px;width:100%;margin:0 auto;padding-bottom:max(12px,env(safe-area-inset-bottom));">
+    <button onclick="showToast('Camera coming soon')" style="background:none;border:none;cursor:pointer;color:#adaaaa;">
+      <i class="ph ph-image" style="font-size:22px;"></i>
+    </button>
+    <input id="msg-input" placeholder="Message..." onkeydown="if(event.key==='Enter')sendMsg()"/>
+    <button class="send-btn" onclick="sendMsg()">
+      <i class="ph-fill ph-paper-plane-tilt" style="font-size:18px;"></i>
+    </button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const threads = [
+  {
+    id:1, name:"Naledi", res:"Sonop Res", status:"📚 In the library, someone bring snacks",
+    photo:"WhatsApp Image 2026-02-03 at 1.55.06 PM (1).jpeg", photoPos:"center top",
+    online:true, time:"now",
+    preview:"haha okay see you there 😂",
+    messages:[
+      {me:false, text:"heyyy are you going to the braai on Saturday?", time:"Fri 6:12pm"},
+      {me:true,  text:"yaaa obviously 🔥 who's all going?", time:"Fri 6:14pm"},
+      {me:false, text:"basically the whole floor lol, Sipho said he's bringing the meat", time:"Fri 6:15pm"},
+      {me:true,  text:"okay I'm in. what time?", time:"Fri 6:16pm"},
+      {me:false, text:"like 5ish? come to Block C", time:"Fri 6:17pm"},
+      {me:true,  text:"haha okay see you there 😂", time:"Fri 6:17pm"},
+    ]
+  },
+  {
+    id:2, name:"Sipho", res:"Kollege Res", status:"🏋️ Gym done. Anyone want to grab a kota?",
+    photo:"WhatsApp Unknown 2026-03-24 at 18.58.03/WhatsApp Image 2026-03-24 at 18.56.50 (1).jpeg", photoPos:"center top",
+    online:true, time:"2h",
+    preview:"bro send me the notes when you get a chance",
+    messages:[
+      {me:false, text:"ey bro you went to the 8am lecture?", time:"Today 8:45am"},
+      {me:true,  text:"nah I overslept lol", time:"Today 8:46am"},
+      {me:false, text:"same 😭 we cooked", time:"Today 8:47am"},
+      {me:false, text:"bro send me the notes when you get a chance", time:"Today 9:01am"},
+    ]
+  },
+  {
+    id:3, name:"Lerato", res:"Minerva Res", status:"☕ At Hatfield Mugg & Bean",
+    photo:"WhatsApp Unknown 2026-03-24 at 18.58.03/WhatsApp Image 2026-03-24 at 18.56.50.jpeg", photoPos:"center top",
+    online:false, time:"yesterday",
+    preview:"genuinely what is wrong with this campus wifi",
+    messages:[
+      {me:false, text:"genuinely what is wrong with this campus wifi", time:"Yesterday 11:20pm"},
+      {me:true,  text:"TELL ME ABOUT IT been trying to submit an assignment for 2 hours", time:"Yesterday 11:22pm"},
+      {me:false, text:"i'm going to cry", time:"Yesterday 11:23pm"},
+      {me:true,  text:"go to the library the wifi there is better", time:"Yesterday 11:24pm"},
+      {me:false, text:"at 11pm?? 😭", time:"Yesterday 11:24pm"},
+    ]
+  },
+  {
+    id:4, name:"Amahle", res:"Erika Res", status:"🎨 Busy with a design brief",
+    photo:"WhatsApp Unknown 2026-03-24 at 18.58.03/WhatsApp Image 2026-03-24 at 18.56.49.jpeg", photoPos:"center 20%",
+    online:false, time:"Mon",
+    preview:"your fit yesterday was SO good btw",
+    messages:[
+      {me:false, text:"hey!! loved your vibe stack on here 😭", time:"Mon 3:14pm"},
+      {me:true,  text:"haha thank you!! same honestly", time:"Mon 3:20pm"},
+      {me:false, text:"we should link up sometime, I'm always at the design studio", time:"Mon 3:21pm"},
+      {me:true,  text:"yes let's! I walk past Erika all the time", time:"Mon 3:22pm"},
+      {me:false, text:"your fit yesterday was SO good btw", time:"Mon 3:45pm"},
+    ]
+  },
+];
+
+let activeThread = null;
+let toastTmr = null;
+
+function renderThreads(list) {
+  document.getElementById('thread-list').innerHTML = list.map(t => `
+    <div class="thread" onclick="openConvo(${t.id})">
+      <div class="avatar">
+        <img src="${t.photo}" style="object-position:${t.photoPos};" onerror="this.style.display='none'"/>
+        ${t.online ? `<span class="online-dot active-pulse"></span>` : `<span class="online-dot" style="background:#484847;animation:none;"></span>`}
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;">
+          <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;">${t.name}</p>
+          <span style="font-size:11px;color:#484847;font-family:'Inter';flex-shrink:0;margin-left:8px;">${t.time}</span>
+        </div>
+        <p style="font-size:13px;color:#adaaaa;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.preview}</p>
+        <p style="font-size:11px;color:#484847;margin-top:2px;">${t.res}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterThreads(q) {
+  const filtered = threads.filter(t => t.name.toLowerCase().includes(q.toLowerCase()));
+  renderThreads(filtered);
+}
+
+function openConvo(id) {
+  const t = threads.find(x => x.id === id);
+  if (!t) return;
+  activeThread = t;
+
+  // Set header
+  document.getElementById('convo-name').textContent = t.name;
+  document.getElementById('convo-sub').textContent = t.res + ' · ' + (t.online ? 'Active now' : 'Last seen ' + t.time);
+  document.getElementById('convo-status').textContent = t.status;
+
+  // Avatar
+  const av = document.getElementById('convo-avatar');
+  av.innerHTML = `<img src="${t.photo}" style="width:100%;height:100%;object-fit:cover;object-position:${t.photoPos};" onerror="this.style.display='none'"/>
+    ${t.online ? `<span class="online-dot active-pulse"></span>` : ''}`;
+
+  // Messages
+  const wrap = document.getElementById('msg-wrap');
+  wrap.innerHTML = t.messages.map(m => `
+    <div style="display:flex;flex-direction:column;align-items:${m.me?'flex-end':'flex-start'};">
+      <div class="bubble ${m.me?'bubble-me':'bubble-them'}">${m.text}</div>
+      <span class="bubble-time ${m.me?'right':''}">${m.time}</span>
+    </div>
+  `).join('');
+  setTimeout(() => wrap.scrollTop = wrap.scrollHeight, 50);
+
+  document.getElementById('convo-view').classList.add('open');
+  document.getElementById('msg-input').focus();
+}
+
+function closeConvo() {
+  document.getElementById('convo-view').classList.remove('open');
+  activeThread = null;
+}
+
+function sendMsg() {
+  const input = document.getElementById('msg-input');
+  const text = input.value.trim();
+  if (!text || !activeThread) return;
+  input.value = '';
+
+  const wrap = document.getElementById('msg-wrap');
+  const now = new Date();
+  const time = now.toLocaleTimeString('en-ZA', {hour:'2-digit',minute:'2-digit'});
+  wrap.innerHTML += `
+    <div style="display:flex;flex-direction:column;align-items:flex-end;">
+      <div class="bubble bubble-me">${text}</div>
+      <span class="bubble-time right">Now ${time}</span>
+    </div>`;
+  wrap.scrollTop = wrap.scrollHeight;
+
+  // Simulate reply after 1.2s
+  setTimeout(() => {
+    const replies = [
+      "haha yes 😭","okay that makes sense","nah for real though 💀","let's link up soon!","wait really??","fr fr","omg same","I was just thinking about that","yoh 😂","aight bet"];
+    const reply = replies[Math.floor(Math.random()*replies.length)];
+    wrap.innerHTML += `
+      <div style="display:flex;flex-direction:column;align-items:flex-start;">
+        <div class="bubble bubble-them">${reply}</div>
+        <span class="bubble-time">Now ${time}</span>
+      </div>`;
+    wrap.scrollTop = wrap.scrollHeight;
+  }, 1200);
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTmr);
+  toastTmr=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+renderThreads(threads);
+</script>
+</body>
+</html>

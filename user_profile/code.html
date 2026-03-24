@@ -1,208 +1,339 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Connect - Profile</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "on-primary": "#591700",
-              "secondary-dim": "#ff7257",
-              "surface-variant": "#262626",
-              "on-tertiary": "#6c2a14",
-              "on-secondary-fixed-variant": "#a01800",
-              "inverse-on-surface": "#565555",
-              "secondary-fixed-dim": "#ffb0a0",
-              "inverse-surface": "#fcf9f8",
-              "tertiary": "#ffb199",
-              "primary": "#ff906a",
-              "on-background": "#ffffff",
-              "tertiary-dim": "#ee9073",
-              "primary-dim": "#ff7442",
-              "background": "#0e0e0e",
-              "secondary": "#ff7257",
-              "on-secondary": "#470500",
-              "on-tertiary-container": "#5f200b",
-              "secondary-fixed": "#ffc4b8",
-              "surface": "#0e0e0e",
-              "on-tertiary-fixed": "#3e0c00",
-              "inverse-primary": "#ac3500",
-              "tertiary-container": "#fe9d7f",
-              "on-error-container": "#ffa8a3",
-              "surface-container": "#1a1919",
-              "error": "#ff716c",
-              "surface-container-lowest": "#000000",
-              "error-container": "#9f0519",
-              "primary-fixed": "#ff7949",
-              "on-secondary-container": "#fff6f4",
-              "surface-dim": "#0e0e0e",
-              "on-error": "#490006",
-              "tertiary-fixed-dim": "#ee9073",
-              "on-secondary-fixed": "#6c0d00",
-              "on-tertiary-fixed-variant": "#6a2913",
-              "outline": "#767575",
-              "surface-tint": "#ff906a",
-              "tertiary-fixed": "#fe9d7f",
-              "primary-container": "#ff7949",
-              "on-surface": "#ffffff",
-              "outline-variant": "#484847",
-              "on-primary-container": "#451000",
-              "error-dim": "#d7383b",
-              "surface-bright": "#2c2c2c",
-              "secondary-container": "#b62409",
-              "on-surface-variant": "#adaaaa",
-              "surface-container-low": "#131313",
-              "surface-container-high": "#201f1f",
-              "on-primary-fixed-variant": "#551600",
-              "on-primary-fixed": "#000000",
-              "surface-container-highest": "#262626",
-              "primary-fixed-dim": "#f7652f"
-            },
-            fontFamily: {
-              "headline": ["Plus Jakarta Sans"],
-              "body": ["Inter"],
-              "label": ["Inter"]
-            },
-            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-          },
-        },
-      }
-    </script>
+<title>Stitch - Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css"/>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body {
-            background-color: #0e0e0e;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background text-on-surface antialiased min-h-screen pb-32">
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-[#0E0E0E]/80 backdrop-blur-md">
-<div class="flex justify-between items-center px-6 py-4 w-full max-w-md mx-auto">
-<button class="hover:bg-white/10 transition-colors p-2 rounded-full flex items-center justify-center">
-<span class="material-symbols-outlined text-[#FF6B35]">arrow_back</span>
-</button>
-<h1 class="font-['Plus_Jakarta_Sans'] text-xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B35] to-[#F04E30] font-black italic">Connect</h1>
-<button class="hover:bg-white/10 transition-colors p-2 rounded-full flex items-center justify-center">
-<span class="material-symbols-outlined text-[#ADAAAA]">settings</span>
-</button>
-</div>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0;}
+  body{min-height:100dvh;font-family:'Inter',sans-serif;background:#0e0e0e;color:#fff;overflow-x:hidden;}
+  .glass-top{background:rgba(14,14,14,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+  .glass-nav{background:rgba(20,19,19,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+  .grad{background:linear-gradient(135deg,#FF6B35,#F04E30);}
+  .grad-text{background:linear-gradient(135deg,#FF6B35,#F04E30);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .grad-border{background:linear-gradient(#0e0e0e,#0e0e0e) padding-box,linear-gradient(135deg,#FF6B35,#F04E30) border-box;border:2px solid transparent;}
+  .section-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;}
+  .card{background:#131313;border-radius:20px;padding:18px;}
+  .pill{background:#1e1e1e;color:#fff;font-size:12px;font-family:'Inter';font-weight:500;padding:6px 14px;border-radius:999px;border:none;cursor:pointer;}
+  .pill-active{background:linear-gradient(135deg,#FF6B35,#F04E30);color:#fff;}
+  .intent-btn{background:#1e1e1e;border:none;border-radius:999px;padding:8px 16px;font-family:'Inter';font-size:13px;font-weight:500;color:#adaaaa;cursor:pointer;transition:all 0.15s;}
+  .intent-btn.on{background:linear-gradient(135deg,#FF6B35,#F04E30);color:#fff;}
+
+  /* Status edit sheet */
+  .sheet-wrap{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none;}
+  .sheet-wrap.open{pointer-events:all;}
+  .sheet-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);opacity:0;transition:opacity 0.25s;}
+  .sheet-wrap.open .sheet-backdrop{opacity:1;}
+  .sheet-panel{position:relative;z-index:1;background:#111;border-radius:28px 28px 0 0;padding:20px 20px 44px;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0,0.18,1);max-width:448px;width:100%;margin:0 auto;}
+  .sheet-wrap.open .sheet-panel{transform:translateY(0);}
+
+  #toast{position:fixed;bottom:108px;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(20,19,19,0.96);backdrop-filter:blur(16px);color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;padding:10px 20px;border-radius:999px;opacity:0;transition:opacity 0.22s,transform 0.22s;pointer-events:none;z-index:200;white-space:nowrap;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .photo-cell{aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:#131313;position:relative;}
+  .photo-cell img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+  .photo-add{aspect-ratio:4/5;border-radius:16px;border:2px dashed #333;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.15s;}
+  .photo-add:active{background:#131313;}
+
+  input[type=text],textarea{background:#131313;border:none;border-radius:14px;padding:12px 14px;color:#fff;font-family:'Inter';font-size:14px;outline:none;width:100%;}
+  textarea{resize:none;line-height:1.5;}
+  input::placeholder,textarea::placeholder{color:#484847;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="glass-top" style="position:fixed;top:0;width:100%;z-index:50;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:448px;margin:0 auto;">
+    <a href="../home_swipe_feed/index.html" style="color:#adaaaa;display:flex;align-items:center;padding:6px;border-radius:999px;">
+      <i class="ph ph-arrow-left" style="font-size:22px;"></i>
+    </a>
+    <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;font-style:italic;letter-spacing:-0.02em;" class="grad-text">My Profile</h1>
+    <button onclick="showToast('Settings coming soon')" style="background:none;border:none;cursor:pointer;color:#adaaaa;padding:6px;">
+      <i class="ph ph-gear" style="font-size:22px;"></i>
+    </button>
+  </div>
 </header>
-<main class="max-w-md mx-auto px-6 pt-24 space-y-8">
-<!-- Profile Header -->
-<section class="flex flex-col items-center">
-<div class="relative">
-<div class="w-[100px] h-[100px] rounded-full p-1 bg-gradient-to-br from-[#FF6B35] to-[#F04E30]">
-<img alt="User Profile" class="w-full h-full object-cover rounded-full border-4 border-background" data-alt="close-up portrait of a handsome man with stylish short hair looking thoughtfully into the distance with soft urban lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOwExTEldNeSre0NG0YcgQpYV1A-5czNApUdZ0GSKJWln36TZd5TxVPtp_neqgXFUgaQ4A0Jk4OYrHo_94Z-IQh8AFhn1fyP2yr93DbK5H8x0eMddyLF-qSunjbdjDRCjkl8Hh9c8i7av0RCYPPcV5YfifNTcMOWSd86BWFYVEBiv07pS2S1q3uIHOUqfzsiyQ2YNiJfOmHtWpz9JTj-MYY01GTmTc3FMMk2d_QeOgXxOYut7so9D_zMTRgW4AmTUUhsBxKwXpUA"/>
-</div>
-<!-- Status Badge -->
-<div class="absolute bottom-1 right-1 w-6 h-6 bg-gradient-to-br from-[#FF6B35] to-[#F04E30] border-2 border-background rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(255,107,53,0.5)]">
-<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">bolt</span>
-</div>
-</div>
-<div class="mt-4 text-center">
-<h2 class="font-headline text-2xl font-bold text-on-surface">Julian, 28</h2>
-<p class="font-body text-sm text-on-surface-variant flex items-center justify-center gap-1 mt-1">
-<span class="material-symbols-outlined text-xs">location_on</span> Brooklyn, NY
-                </p>
-</div>
-</section>
-<!-- Bio Section -->
-<section class="space-y-2">
-<h3 class="text-xs font-bold uppercase tracking-widest text-[#FF6B35]">The Bio</h3>
-<p class="font-body text-[14px] leading-[1.5] text-on-surface-variant text-left">
-                Design architect by day, urban explorer by night. Looking for someone who appreciates high-contrast aesthetics and deep conversations over espresso. I believe in cinematic moments and honest connections.
-            </p>
-</section>
-<!-- Interests (Tags) -->
-<section class="space-y-3">
-<h3 class="text-xs font-bold uppercase tracking-widest text-[#FF6B35]">Interests</h3>
-<div class="flex flex-wrap gap-2">
-<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Mid-century Modern</span>
-<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Street Photography</span>
-<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Vinyl</span>
-<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Techno</span>
-<span class="bg-[#1A1A1A] border border-[#333333] px-4 py-1.5 rounded-[20px] text-xs font-medium text-on-surface">Architecture</span>
-</div>
-</section>
-<!-- Photo Gallery -->
-<section class="space-y-3">
-<div class="flex justify-between items-end">
-<h3 class="text-xs font-bold uppercase tracking-widest text-[#FF6B35]">Moments</h3>
-<span class="text-[10px] text-on-surface-variant">3 / 6 Photos</span>
-</div>
-<div class="grid grid-cols-[1fr_1fr_0.3fr] gap-[10px]">
-<div class="aspect-square rounded-xl overflow-hidden bg-surface-container">
-<img alt="Gallery 1" class="w-full h-full object-cover" data-alt="dramatic wide shot of a valley at sunset with mountains in the background and warm golden light across the landscape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmS1Leyhj80GXzcOTpuwNDfLs-F1cTDWxTNPpkdOOPuI_X46pzbzbC0hfLdgrSjSVfZ-UsaBjAnXxsdmJ1GcTCKwCHbPD_j-zkyU-E6idMJmIcIkRknqHMHAZycO0PAEaI0iRCTqZjRiFAvQ_hLB4tcbGA8U9CQnVcpG5nZ-9e9dGUtsm3bHL_tfFf4o55vPz51hyhRKnuCRmTL9jQvjcIVhBqdKlczcMjiJD78thzCQbXbfcyqszfCBE2vTV8ZsJn1g0_8se-8A"/>
-</div>
-<div class="aspect-square rounded-xl overflow-hidden bg-surface-container">
-<img alt="Gallery 2" class="w-full h-full object-cover" data-alt="shadowy silhouette of a person standing against a brightly lit modern architecture wall with geometric patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6vALarOwC9HhJdiTzdiAwwkGsnCxYNSkcmT1q-2AjLmmGmkslJ9YmtQaGZOujlRgg4kJ6rG_iSVzsEY7I4s546v5ABBi_qPRdvMZyfApCK8MzE-UizdQTx4lVKW9CAZ0ib9cBORm8Ro8P8UZgXXl7l1sD8CgtHEoYwxQBePjaqYtTene18C0IW7qL61wA-jBkQSUI7Gq-fRSagB71NHr-YhvozvMA6Sm_9FrstcG4phnfuXMALwl_llpkzcYoEInMtWCYYTNyIQ"/>
-</div>
-<button class="aspect-square rounded-xl border-2 border-dashed border-[#333] flex items-center justify-center hover:bg-white/5 transition-all">
-<span class="material-symbols-outlined text-[#ADAAAA]">add</span>
-</button>
-</div>
-</section>
-<!-- "My Vibe" Section -->
-<section class="space-y-3 pb-10">
-<h3 class="text-xs font-bold uppercase tracking-widest text-[#FF6B35]">My Vibe</h3>
-<!-- Vibe Stack: Asymmetric layout -->
-<div class="flex flex-wrap gap-2 items-start">
-<div class="bg-gradient-to-br from-[#FF6B35] to-[#F04E30] px-5 py-2 rounded-[20px] text-xs font-bold text-white shadow-[0_4px_10px_rgba(240,78,48,0.3)]">
-                    Night Owl
-                </div>
-<div class="mt-4 bg-[#1A1A1A] border border-[#333333] px-4 py-2 rounded-[20px] text-xs font-medium text-on-surface">
-                    Experimental
-                </div>
-<div class="bg-[#1A1A1A] border border-[#333333] px-4 py-2 rounded-[20px] text-xs font-medium text-on-surface">
-                    Minimalist
-                </div>
-<div class="mt-2 bg-[#1A1A1A] border border-[#333333] px-4 py-2 rounded-[20px] text-xs font-medium text-on-surface">
-                    Coffee Snob
-                </div>
-</div>
-</section>
+
+<!-- MAIN -->
+<main style="padding-top:72px;padding-bottom:120px;max-width:448px;margin:0 auto;padding-left:16px;padding-right:16px;">
+
+  <!-- ── HERO ── -->
+  <section style="display:flex;flex-direction:column;align-items:center;padding:20px 0 8px;">
+
+    <!-- Avatar with gradient ring + edit -->
+    <div style="position:relative;margin-bottom:16px;">
+      <div class="grad-border" style="width:108px;height:108px;border-radius:999px;padding:3px;">
+        <div style="width:100%;height:100%;border-radius:999px;overflow:hidden;background:#131313;">
+          <img src="../home_swipe_feed/WhatsApp Image 2026-02-03 at 1.55.06 PM (1).jpeg"
+               alt="You" style="width:100%;height:100%;object-fit:cover;object-position:center top;"
+               onerror="this.style.display='none'"/>
+        </div>
+      </div>
+      <!-- Edit button -->
+      <button onclick="showToast('Photo upload coming soon')" style="position:absolute;bottom:2px;right:2px;width:28px;height:28px;border-radius:999px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FF6B35,#F04E30);box-shadow:0 0 12px rgba(255,107,53,0.5);">
+        <i class="ph-fill ph-camera" style="font-size:14px;color:#fff;"></i>
+      </button>
+      <!-- Active bolt -->
+      <div style="position:absolute;top:2px;right:2px;width:22px;height:22px;border-radius:999px;background:linear-gradient(135deg,#FF6B35,#F04E30);border:2px solid #0e0e0e;display:flex;align-items:center;justify-content:center;">
+        <i class="ph-fill ph-lightning" style="font-size:11px;color:#fff;"></i>
+      </div>
+    </div>
+
+    <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:4px;">You, 21</h2>
+    <p style="color:#adaaaa;font-size:13px;display:flex;align-items:center;gap:4px;margin-bottom:8px;">
+      <i class="ph ph-building" style="font-size:13px;"></i> Sonop Res · Room 214
+    </p>
+
+    <!-- Profile completion -->
+    <div style="width:100%;background:#131313;border-radius:999px;height:6px;margin:8px 0 4px;overflow:hidden;">
+      <div style="width:70%;height:100%;background:linear-gradient(135deg,#FF6B35,#F04E30);border-radius:999px;"></div>
+    </div>
+    <p style="font-size:11px;color:#adaaaa;font-family:'Inter';">Profile 70% complete — <span class="grad-text" style="font-weight:600;cursor:pointer;" onclick="showToast('Add more photos to complete your profile')">add photos to finish</span></p>
+  </section>
+
+  <!-- ── STATUS ── -->
+  <section style="margin-top:16px;">
+    <p class="section-label grad-text">What's your vibe rn?</p>
+    <button onclick="openSheet('status-sheet')" style="width:100%;background:#131313;border:none;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;text-align:left;">
+      <span style="width:8px;height:8px;border-radius:999px;background:#4ade80;flex-shrink:0;"></span>
+      <p id="current-status" style="color:rgba(255,255,255,0.8);font-size:14px;font-family:'Inter';flex:1;">📚 In the library, someone bring snacks</p>
+      <i class="ph ph-pencil-simple" style="font-size:16px;color:#adaaaa;"></i>
+    </button>
+    <p style="font-size:11px;color:#484847;margin-top:6px;padding-left:4px;">Auto-expires in 6 hours · visible to people in your block</p>
+  </section>
+
+  <!-- ── INTENT ── -->
+  <section style="margin-top:20px;">
+    <p class="section-label grad-text">Open to</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;" id="intent-pills">
+      <button class="intent-btn on" onclick="toggleIntent(this)">down to hang</button>
+      <button class="intent-btn on" onclick="toggleIntent(this)">study buddy</button>
+      <button class="intent-btn"    onclick="toggleIntent(this)">gym partner</button>
+      <button class="intent-btn"    onclick="toggleIntent(this)">open to dating</button>
+      <button class="intent-btn"    onclick="toggleIntent(this)">just friends</button>
+      <button class="intent-btn"    onclick="toggleIntent(this)">creative collab</button>
+      <button class="intent-btn"    onclick="toggleIntent(this)">deep convos</button>
+    </div>
+  </section>
+
+  <!-- ── BIO ── -->
+  <section style="margin-top:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <p class="section-label grad-text" style="margin:0;">My Vibe</p>
+      <button onclick="toggleBioEdit()" style="background:none;border:none;cursor:pointer;color:#adaaaa;font-family:'Inter';font-size:12px;display:flex;align-items:center;gap:4px;" id="bio-edit-btn">
+        <i class="ph ph-pencil-simple" style="font-size:14px;"></i> Edit
+      </button>
+    </div>
+    <div class="card" id="bio-display">
+      <p style="color:#adaaaa;font-size:14px;line-height:1.65;" id="bio-text-display">Moot court by day, bad reality TV by night. Will fight you about anything except pizza toppings.</p>
+    </div>
+    <div id="bio-edit" style="display:none;">
+      <textarea id="bio-input" rows="4" placeholder="Write your vibe..." style="margin-bottom:8px;">Moot court by day, bad reality TV by night. Will fight you about anything except pizza toppings.</textarea>
+      <button onclick="saveBio()" style="width:100%;padding:12px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);">Save</button>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <section style="margin-top:20px;">
+    <p class="section-label grad-text">About me</p>
+    <div style="display:flex;gap:10px;">
+      <div class="card" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <i class="ph-duotone ph-scales" style="font-size:22px;color:#ff906a;"></i>
+        <span style="font-size:12px;color:#adaaaa;font-weight:500;">Law</span>
+        <span style="font-size:10px;color:#484847;">Course</span>
+      </div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <i class="ph-duotone ph-calendar-blank" style="font-size:22px;color:#ff906a;"></i>
+        <span style="font-size:12px;color:#adaaaa;font-weight:500;">3rd Year</span>
+        <span style="font-size:10px;color:#484847;">Year</span>
+      </div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <i class="ph-duotone ph-moon-stars" style="font-size:22px;color:#ff906a;"></i>
+        <span style="font-size:12px;color:#adaaaa;font-weight:500;">Night Owl</span>
+        <span style="font-size:10px;color:#484847;">Vibe</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MOMENTS / PHOTOS ── -->
+  <section style="margin-top:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <p class="section-label grad-text" style="margin:0;">Moments</p>
+      <span style="font-size:11px;color:#484847;font-family:'Inter';">1 / 6 photos</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-cell">
+        <img src="../home_swipe_feed/WhatsApp Image 2026-02-03 at 1.55.06 PM (1).jpeg" onerror="this.style.display='none'"/>
+      </div>
+      <div class="photo-add" onclick="showToast('Photo upload coming soon')">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;color:#333;">
+          <i class="ph ph-plus" style="font-size:28px;"></i>
+          <span style="font-size:12px;font-family:'Inter';">Add photo</span>
+        </div>
+      </div>
+      <div class="photo-add" onclick="showToast('Photo upload coming soon')">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;color:#333;">
+          <i class="ph ph-plus" style="font-size:28px;"></i>
+        </div>
+      </div>
+      <div class="photo-add" onclick="showToast('Photo upload coming soon')">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;color:#333;">
+          <i class="ph ph-plus" style="font-size:28px;"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── VIBE TAGS ── -->
+  <section style="margin-top:20px;">
+    <p class="section-label grad-text">Interests</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <span class="pill">Moot Court</span>
+      <span class="pill pill-active">Reality TV</span>
+      <span class="pill">Late night library</span>
+      <span class="pill">Pizza</span>
+      <span class="pill">Campus walks</span>
+      <button onclick="showToast('Add interests coming soon')" style="background:none;border:1px dashed #333;border-radius:999px;padding:6px 14px;color:#484847;font-size:12px;cursor:pointer;font-family:'Inter';">+ Add</button>
+    </div>
+  </section>
+
+  <!-- ── ANONYMOUS COMPLIMENTS ── -->
+  <section style="margin-top:20px;">
+    <p class="section-label grad-text">Anonymous compliments 🎁</p>
+    <div class="card" style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#1a1919;border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">🔥</span>
+        <p style="font-size:13px;color:#fff;">"your fit was 🔥 today"</p>
+      </div>
+      <div style="background:#1a1919;border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">✨</span>
+        <p style="font-size:13px;color:#fff;">"certified main character"</p>
+      </div>
+      <p style="font-size:11px;color:#484847;text-align:center;margin-top:4px;">Connect more to reveal who sent these</p>
+    </div>
+  </section>
+
+  <!-- ── DANGER ZONE ── -->
+  <section style="margin-top:24px;padding-bottom:8px;">
+    <button onclick="showToast('Account paused — you won\'t appear in feeds')" style="width:100%;padding:14px;border-radius:999px;border:1px solid #333;background:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#adaaaa;margin-bottom:10px;">
+      <i class="ph ph-pause-circle" style="font-size:16px;margin-right:6px;"></i>Pause my profile
+    </button>
+    <button onclick="showToast('Are you sure? This cannot be undone')" style="width:100%;padding:14px;border-radius:999px;border:1px solid #9f0519;background:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#ff716c;">
+      <i class="ph ph-sign-out" style="font-size:16px;margin-right:6px;"></i>Log out
+    </button>
+  </section>
+
 </main>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-[40px] z-50 bg-[#1A1A1A]/80 backdrop-blur-[10px] shadow-[0_4px_15px_rgba(240,78,48,0.4)] max-w-md">
-<div class="flex justify-around items-center px-2 py-2">
-<!-- Discover -->
-<a class="flex flex-col items-center justify-center text-[#ADAAAA] p-3 hover:text-white transition-all active:scale-90 duration-300 ease-out" href="#">
-<span class="material-symbols-outlined" data-icon="explore">explore</span>
-<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Discover</span>
-</a>
-<!-- Matches -->
-<a class="flex flex-col items-center justify-center text-[#ADAAAA] p-3 hover:text-white transition-all active:scale-90 duration-300 ease-out" href="#">
-<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
-<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Matches</span>
-</a>
-<!-- Chat -->
-<a class="flex flex-col items-center justify-center text-[#ADAAAA] p-3 hover:text-white transition-all active:scale-90 duration-300 ease-out" href="#">
-<span class="material-symbols-outlined" data-icon="forum">forum</span>
-<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Chat</span>
-</a>
-<!-- Profile (Active) -->
-<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#FF6B35] to-[#F04E30] text-white rounded-full p-3 shadow-[0_0_20px_rgba(255,107,53,0.5)] active:scale-90 duration-300 ease-out" href="#">
-<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
-<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Profile</span>
-</a>
-</div>
+
+<!-- BOTTOM NAV -->
+<nav class="glass-nav" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);border-radius:999px;z-index:50;box-shadow:0 2px 20px rgba(240,78,48,0.18);padding:5px 8px;">
+  <div style="display:flex;align-items:center;gap:2px;">
+    <a href="../home_swipe_feed/index.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-compass" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Discover</span>
+    </a>
+    <a href="../home_swipe_feed/connects.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-heart" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Connects</span>
+    </a>
+    <a href="../home_swipe_feed/chat.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-chat-circle-dots" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Chat</span>
+    </a>
+    <a href="code.html" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#fff;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph-fill ph-user" style="font-size:19px;filter:drop-shadow(0 0 5px rgba(255,107,53,0.8));"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Profile</span>
+      <span style="position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:14px;height:2.5px;border-radius:999px;background:linear-gradient(135deg,#FF6B35,#F04E30);"></span>
+    </a>
+  </div>
 </nav>
-</body></html>
+
+<!-- STATUS EDIT SHEET -->
+<div class="sheet-wrap" id="status-sheet" onclick="handleBackdrop(event,'status-sheet')">
+  <div class="sheet-backdrop"></div>
+  <div class="sheet-panel">
+    <div style="width:36px;height:4px;border-radius:999px;background:#2a2a2a;margin:0 auto 20px;"></div>
+    <p style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:4px;">What's your vibe rn?</p>
+    <p style="color:#adaaaa;font-size:13px;margin-bottom:16px;">Auto-expires in 6 hours</p>
+
+    <input type="text" id="status-input" placeholder="Type your status..." style="margin-bottom:12px;" maxlength="60"/>
+
+    <p style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#adaaaa;margin-bottom:10px;">Quick pick</p>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;" id="status-quick">
+      <button onclick="pickStatus(this)" style="background:#1e1e1e;border:none;border-radius:12px;padding:12px 14px;text-align:left;color:#fff;font-family:'Inter';font-size:14px;cursor:pointer;">📚 In the library, someone bring snacks</button>
+      <button onclick="pickStatus(this)" style="background:#1e1e1e;border:none;border-radius:12px;padding:12px 14px;text-align:left;color:#fff;font-family:'Inter';font-size:14px;cursor:pointer;">🏠 In my room, door's open</button>
+      <button onclick="pickStatus(this)" style="background:#1e1e1e;border:none;border-radius:12px;padding:12px 14px;text-align:left;color:#fff;font-family:'Inter';font-size:14px;cursor:pointer;">☕ At the caf, come find me</button>
+      <button onclick="pickStatus(this)" style="background:#1e1e1e;border:none;border-radius:12px;padding:12px 14px;text-align:left;color:#fff;font-family:'Inter';font-size:14px;cursor:pointer;">🎮 Gaming, someone join</button>
+      <button onclick="pickStatus(this)" style="background:#1e1e1e;border:none;border-radius:12px;padding:12px 14px;text-align:left;color:#fff;font-family:'Inter';font-size:14px;cursor:pointer;">🚶 Going to Pick n Pay, anyone need anything?</button>
+      <button onclick="pickStatus(this)" style="background:#1e1e1e;border:none;border-radius:12px;padding:12px 14px;text-align:left;color:#fff;font-family:'Inter';font-size:14px;cursor:pointer;">😴 Do not disturb lol</button>
+    </div>
+    <button onclick="saveStatus()" style="width:100%;padding:15px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);box-shadow:0 0 20px rgba(255,107,53,0.35);">
+      Set status
+    </button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+let toastTmr = null;
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTmr);
+  toastTmr=setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+function toggleIntent(btn){
+  btn.classList.toggle('on');
+  showToast(btn.classList.contains('on') ? `Added: ${btn.textContent}` : `Removed: ${btn.textContent}`);
+}
+
+function toggleBioEdit(){
+  const disp = document.getElementById('bio-display');
+  const edit = document.getElementById('bio-edit');
+  const btn  = document.getElementById('bio-edit-btn');
+  const isEditing = edit.style.display !== 'none';
+  disp.style.display = isEditing ? 'block' : 'none';
+  edit.style.display = isEditing ? 'none'  : 'block';
+  btn.innerHTML = isEditing
+    ? '<i class="ph ph-pencil-simple" style="font-size:14px;"></i> Edit'
+    : '<i class="ph ph-x" style="font-size:14px;"></i> Cancel';
+}
+
+function saveBio(){
+  const val = document.getElementById('bio-input').value.trim();
+  if (!val) return;
+  document.getElementById('bio-text-display').textContent = val;
+  toggleBioEdit();
+  showToast('Bio saved ✓');
+}
+
+function openSheet(id){ document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeSheet(id){ document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
+function handleBackdrop(e,id){ if(e.target.classList.contains('sheet-backdrop')) closeSheet(id); }
+
+function pickStatus(btn){
+  document.getElementById('status-input').value = btn.textContent.trim();
+  document.querySelectorAll('#status-quick button').forEach(b=>b.style.background='#1e1e1e');
+  btn.style.background='#262626';
+}
+
+function saveStatus(){
+  const val = document.getElementById('status-input').value.trim();
+  if (!val) { showToast('Write something first'); return; }
+  document.getElementById('current-status').textContent = val;
+  closeSheet('status-sheet');
+  showToast('Status updated ✓');
+}
+</script>
+</body>
+</html>

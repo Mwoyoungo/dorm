@@ -61,7 +61,7 @@
     <div style="display:flex;flex-direction:column;gap:10px;">
 
       <!-- Connect 1 -->
-      <div class="connect-card" onclick="showToast('Chat coming soon')">
+      <div class="connect-card" onclick="window.location='chat.html'">
         <div style="position:relative;flex-shrink:0;">
           <div style="width:52px;height:52px;border-radius:999px;background:#262626;overflow:hidden;">
             <img src="WhatsApp Image 2026-02-03 at 1.55.06 PM (1).jpeg" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:999px;" onerror="this.style.display='none'"/>
@@ -80,7 +80,7 @@
       </div>
 
       <!-- Connect 2 -->
-      <div class="connect-card" onclick="showToast('Chat coming soon')">
+      <div class="connect-card" onclick="window.location='chat.html'">
         <div style="position:relative;flex-shrink:0;">
           <div style="width:52px;height:52px;border-radius:999px;background:#1a1919;display:flex;align-items:center;justify-content:center;">
             <i class="ph-fill ph-user" style="font-size:24px;color:#262626;"></i>
@@ -169,7 +169,7 @@
           <p style="color:#adaaaa;font-size:13px;font-family:'Inter';margin:0;">She vibed you back. It's mutual now.</p>
         </div>
       </div>
-      <button onclick="showToast('Chat coming soon')" style="width:100%;margin-top:12px;padding:12px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;background:linear-gradient(135deg,#a78bfa,#7c3aed);box-shadow:0 0 16px rgba(167,139,250,0.3);">
+      <button onclick="window.location='chat.html'" style="width:100%;margin-top:12px;padding:12px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;background:linear-gradient(135deg,#a78bfa,#7c3aed);box-shadow:0 0 16px rgba(167,139,250,0.3);">
         Say something 💜
       </button>
     </div>
@@ -208,23 +208,24 @@
 </main>
 
 <!-- BOTTOM NAV -->
-<nav class="glass-nav" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);width:90%;max-width:448px;border-radius:40px;z-index:50;box-shadow:0 4px 24px rgba(240,78,48,0.22);">
-  <div style="display:flex;justify-content:space-around;align-items:center;padding:8px;">
-    <a href="index.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;color:#adaaaa;text-decoration:none;transition:color 0.15s;">
-      <i class="ph ph-compass" style="font-size:22px;"></i>
-      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Discover</span>
+<nav class="glass-nav" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);border-radius:999px;z-index:50;box-shadow:0 2px 20px rgba(240,78,48,0.18);padding:5px 8px;">
+  <div style="display:flex;align-items:center;gap:2px;">
+    <a href="index.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-compass" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Discover</span>
     </a>
-    <a href="connects.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;border-radius:999px;text-decoration:none;background:linear-gradient(135deg,#FF6B35,#F04E30);color:#fff;box-shadow:0 0 18px rgba(255,107,53,0.45);">
-      <i class="ph-fill ph-heart" style="font-size:22px;"></i>
-      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Connects</span>
+    <a href="connects.html" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#fff;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph-fill ph-heart" style="font-size:19px;filter:drop-shadow(0 0 5px rgba(255,107,53,0.8));"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Connects</span>
+      <span style="position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:14px;height:2.5px;border-radius:999px;background:linear-gradient(135deg,#FF6B35,#F04E30);"></span>
     </a>
-    <a href="#" onclick="showToast('Chat coming soon');return false;" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;color:#adaaaa;text-decoration:none;">
-      <i class="ph ph-chat-circle-dots" style="font-size:22px;"></i>
-      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Chat</span>
+    <a href="chat.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-chat-circle-dots" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Chat</span>
     </a>
-    <a href="../user_profile/code.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;color:#adaaaa;text-decoration:none;">
-      <i class="ph ph-user" style="font-size:22px;"></i>
-      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Profile</span>
+    <a href="../user_profile/code.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-user" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Profile</span>
     </a>
   </div>
 </nav>

@@ -133,6 +133,21 @@
 </head>
 <body class="select-none">
 
+<!-- ═══════════ SPLASH SCREEN ═══════════ -->
+<div id="splash-screen" style="position:fixed;inset:0;z-index:2000;background:#0e0e0e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;pointer-events:none;">
+  <!-- ambient glow orb -->
+  <div id="splash-glow" style="position:absolute;width:280px;height:280px;border-radius:999px;background:radial-gradient(circle,rgba(255,107,53,0.22) 0%,transparent 70%);opacity:0;transform:scale(0.4);transition:opacity 0.9s ease,transform 0.9s ease;"></div>
+  <!-- wordmark -->
+  <div id="splash-logo" style="position:relative;text-align:center;opacity:0;transform:scale(0.78) translateY(10px);transition:opacity 0.55s cubic-bezier(0.34,1.4,0.64,1),transform 0.55s cubic-bezier(0.34,1.4,0.64,1);">
+    <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:56px;font-style:italic;letter-spacing:-0.03em;background:linear-gradient(135deg,#FF6B35,#F04E30);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;text-shadow:none;">Stitch</h1>
+    <p id="splash-tag" style="color:#484847;font-size:11px;font-family:'Inter';letter-spacing:0.14em;text-transform:uppercase;margin-top:10px;opacity:0;transform:translateY(6px);transition:opacity 0.45s ease,transform 0.45s ease;">connect for real</p>
+  </div>
+</div>
+<style>
+  @keyframes splash-out{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.06)}}
+  .splash-exit{animation:splash-out 0.42s ease-in forwards;}
+</style>
+
 <!-- ═══════════ TOP BAR ═══════════ -->
 <header class="fixed top-0 w-full z-50 glass-top">
   <div class="flex justify-between items-center px-5 py-3.5 w-full max-w-md mx-auto">
@@ -151,10 +166,10 @@
     <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;font-style:italic;letter-spacing:-0.02em;" class="grad-text select-none">Stitch</h1>
 
     <div class="flex items-center gap-0.5">
-      <button class="relative p-2 rounded-full text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150" onclick="showToast('3 new waves 👋')">
+      <a href="notifications.html" class="relative p-2 rounded-full text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150">
         <i class="ph-duotone ph-bell" style="font-size:22px;"></i>
         <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full grad"></span>
-      </button>
+      </a>
       <button class="p-2 rounded-full text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150" onclick="openSheet('filter-sheet')">
         <i class="ph ph-sliders-horizontal" style="font-size:22px;"></i>
       </button>
@@ -163,7 +178,7 @@
 </header>
 
 <!-- ═══════════ MAIN ═══════════ -->
-<main class="pt-[68px] pb-36 px-4 flex flex-col items-center max-w-md mx-auto">
+<main class="pt-[68px] pb-24 px-4 flex flex-col items-center max-w-md mx-auto">
 
   <!-- CARD STACK -->
   <div class="card-wrap" id="card-stack">
@@ -195,24 +210,29 @@
 </main>
 
 <!-- ═══════════ BOTTOM NAV ═══════════ -->
-<nav class="fixed bottom-5 left-1/2 -translate-x-1/2 w-[90%] max-w-md rounded-[40px] z-50 glass-nav" style="box-shadow:0 4px 24px rgba(240,78,48,0.22);">
-  <div class="flex justify-around items-center px-2 py-2">
-    <a href="#" class="flex flex-col items-center gap-0.5 p-3 rounded-full grad grad-glow text-white active:scale-90 duration-150">
-      <i class="ph-fill ph-compass" style="font-size:22px;"></i>
-      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Discover</span>
+<nav class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 glass-nav" style="border-radius:999px;box-shadow:0 2px 20px rgba(240,78,48,0.18);padding:5px 8px;">
+  <div style="display:flex;align-items:center;gap:2px;">
+    <!-- Discover (active) -->
+    <a href="#" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#fff;text-decoration:none;transition:transform 0.15s;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph-fill ph-compass" style="font-size:19px;filter:drop-shadow(0 0 5px rgba(255,107,53,0.8));"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Discover</span>
+      <span style="position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:14px;height:2.5px;border-radius:999px;background:linear-gradient(135deg,#FF6B35,#F04E30);"></span>
     </a>
-    <a href="connects.html" class="relative flex flex-col items-center gap-0.5 p-3 text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150">
-      <i class="ph ph-heart" style="font-size:22px;"></i>
-      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Connects</span>
-      <span class="absolute top-2 right-2 w-2 h-2 rounded-full" style="background:#FF6B35;"></span>
+    <!-- Connects -->
+    <a href="connects.html" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;transition:transform 0.15s;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-heart" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Connects</span>
+      <span style="position:absolute;top:5px;right:9px;width:5px;height:5px;border-radius:999px;background:#FF6B35;"></span>
     </a>
-    <a href="#" onclick="showToast('Chat coming soon');return false;" class="flex flex-col items-center gap-0.5 p-3 text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150">
-      <i class="ph ph-chat-circle-dots" style="font-size:22px;"></i>
-      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Chat</span>
+    <!-- Chat -->
+    <a href="chat.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;transition:transform 0.15s;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-chat-circle-dots" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Chat</span>
     </a>
-    <a href="../user_profile/code.html" class="flex flex-col items-center gap-0.5 p-3 text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150">
-      <i class="ph ph-user" style="font-size:22px;"></i>
-      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Profile</span>
+    <!-- Profile -->
+    <a href="../user_profile/code.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border-radius:999px;color:#adaaaa;text-decoration:none;transition:transform 0.15s;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+      <i class="ph ph-user" style="font-size:19px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">Profile</span>
     </a>
   </div>
 </nav>
@@ -802,6 +822,23 @@ function showToast(msg){
 
 // ─── INIT ────────────────────────────────────────────────────
 initCards();
+
+// ─── SPLASH ─────────────────────────────────────────────────
+(function(){
+  var splash   = document.getElementById('splash-screen');
+  var glow     = document.getElementById('splash-glow');
+  var logo     = document.getElementById('splash-logo');
+  var tag      = document.getElementById('splash-tag');
+  // animate in
+  setTimeout(function(){ glow.style.opacity='1'; glow.style.transform='scale(1)'; }, 80);
+  setTimeout(function(){ logo.style.opacity='1'; logo.style.transform='scale(1) translateY(0)'; }, 180);
+  setTimeout(function(){ tag.style.opacity='1';  tag.style.transform='translateY(0)'; }, 560);
+  // animate out
+  setTimeout(function(){
+    splash.classList.add('splash-exit');
+    setTimeout(function(){ splash.style.display='none'; }, 420);
+  }, 1900);
+})();
 </script>
 </body>
 </html>
