@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch - Connects</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css"/>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{min-height:100dvh;font-family:'Inter',sans-serif;background:#0e0e0e;color:#fff;overflow-x:hidden;}
+  .glass-top{background:rgba(14,14,14,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+  .glass-nav{background:rgba(20,19,19,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+  .grad{background:linear-gradient(135deg,#FF6B35,#F04E30);}
+  .grad-text{background:linear-gradient(135deg,#FF6B35,#F04E30);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  @keyframes ring-pulse{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,0.7)}60%{box-shadow:0 0 0 5px rgba(74,222,128,0)}}
+  .active-pulse{animation:ring-pulse 2s ease-out infinite;}
+  .tab-on {background:linear-gradient(135deg,#FF6B35,#F04E30);color:#fff;box-shadow:0 0 12px rgba(255,107,53,0.3);}
+  .tab-off{background:#1a1919;color:#adaaaa;}
+  #toast{position:fixed;bottom:108px;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(20,19,19,0.96);backdrop-filter:blur(16px);color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;padding:10px 20px;border-radius:999px;opacity:0;transition:opacity 0.22s,transform 0.22s;pointer-events:none;z-index:200;white-space:nowrap;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .connect-card{background:#131313;border-radius:20px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background 0.15s;}
+  .connect-card:active{background:#1a1919;}
+  .secret-card{background:#13101a;border-radius:20px;padding:14px;display:flex;align-items:center;gap:12px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="fixed top-0 w-full z-50 glass-top">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:448px;margin:0 auto;">
+    <a href="index.html" style="color:#adaaaa;display:flex;align-items:center;padding:6px;border-radius:999px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#adaaaa'">
+      <i class="ph ph-arrow-left" style="font-size:22px;"></i>
+    </a>
+    <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;font-style:italic;letter-spacing:-0.02em;" class="grad-text">Connects</h1>
+    <button onclick="showToast('Search coming soon')" style="background:none;border:none;cursor:pointer;color:#adaaaa;padding:6px;border-radius:999px;">
+      <i class="ph ph-magnifying-glass" style="font-size:22px;"></i>
+    </button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main style="padding-top:68px;padding-bottom:120px;max-width:448px;margin:0 auto;padding-left:16px;padding-right:16px;">
+
+  <!-- Tabs -->
+  <div style="display:flex;gap:8px;margin-bottom:20px;margin-top:8px;">
+    <button class="tab-on" id="tab-mutual" onclick="switchTab('mutual')" style="padding:8px 18px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;transition:all 0.2s;">Mutual</button>
+    <button class="tab-off" id="tab-waves"  onclick="switchTab('waves')"  style="padding:8px 18px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;transition:all 0.2s;">Waves</button>
+    <button class="tab-off" id="tab-secret" onclick="switchTab('secret')" style="padding:8px 18px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;transition:all 0.2s;">
+      <i class="ph ph-eye-slash" style="font-size:13px;margin-right:4px;"></i>Crushes
+    </button>
+  </div>
+
+  <!-- ── MUTUAL CONNECTS ── -->
+  <div id="panel-mutual">
+    <p style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#adaaaa;margin-bottom:12px;">2 mutual connects</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <!-- Connect 1 -->
+      <div class="connect-card" onclick="showToast('Chat coming soon')">
+        <div style="position:relative;flex-shrink:0;">
+          <div style="width:52px;height:52px;border-radius:999px;background:#262626;overflow:hidden;">
+            <img src="WhatsApp Image 2026-02-03 at 1.55.06 PM (1).jpeg" style="width:100%;height:100%;object-fit:cover;object-position:center top;" onerror="this.style.display='none'"/>
+          </div>
+          <span class="active-pulse" style="position:absolute;bottom:1px;right:1px;width:12px;height:12px;border-radius:999px;background:#4ade80;border:2px solid #131313;"></span>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+            <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin:0;">Naledi</p>
+            <span style="font-size:11px;color:#adaaaa;font-family:'Inter';">now</span>
+          </div>
+          <p style="color:#adaaaa;font-size:13px;font-family:'Inter';margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">📚 In the library, someone bring snacks</p>
+          <p style="font-size:11px;color:#484847;font-family:'Inter';margin-top:3px;">Sonop Res · Law · 3rd Year</p>
+        </div>
+        <i class="ph ph-chat-circle-dots" style="font-size:22px;color:#FF6B35;flex-shrink:0;"></i>
+      </div>
+
+      <!-- Connect 2 -->
+      <div class="connect-card" onclick="showToast('Chat coming soon')">
+        <div style="position:relative;flex-shrink:0;">
+          <div style="width:52px;height:52px;border-radius:999px;background:#1a1919;display:flex;align-items:center;justify-content:center;">
+            <i class="ph-fill ph-user" style="font-size:24px;color:#262626;"></i>
+          </div>
+          <span style="position:absolute;bottom:1px;right:1px;width:12px;height:12px;border-radius:999px;background:#adaaaa;border:2px solid #131313;"></span>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+            <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin:0;">Lerato</p>
+            <span style="font-size:11px;color:#adaaaa;font-family:'Inter';">2h ago</span>
+          </div>
+          <p style="color:#adaaaa;font-size:13px;font-family:'Inter';margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">☕ At Hatfield Mugg & Bean</p>
+          <p style="font-size:11px;color:#484847;font-family:'Inter';margin-top:3px;">Minerva Res · Psychology · 3rd Year</p>
+        </div>
+        <i class="ph ph-chat-circle-dots" style="font-size:22px;color:#FF6B35;flex-shrink:0;"></i>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── WAVES ── -->
+  <div id="panel-waves" style="display:none;">
+    <p style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#adaaaa;margin-bottom:12px;">3 people waved at you</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <div class="connect-card">
+        <div style="width:52px;height:52px;border-radius:999px;background:#1a1919;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="ph-fill ph-user" style="font-size:24px;color:#262626;"></i>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin:0 0 2px;">Sipho</p>
+          <p style="color:#adaaaa;font-size:13px;font-family:'Inter';margin:0;">Kollege Res · Engineering</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
+          <button onclick="showToast('Waved back 👋')" style="padding:8px 14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);">Wave back</button>
+          <button onclick="this.closest('.connect-card').style.opacity='0.3'" style="padding:8px 14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#adaaaa;background:#1e1e1e;">Pass</button>
+        </div>
+      </div>
+
+      <div class="connect-card">
+        <div style="width:52px;height:52px;border-radius:999px;background:#1a1919;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="ph-fill ph-user" style="font-size:24px;color:#262626;"></i>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin:0 0 2px;">Amahle</p>
+          <p style="color:#adaaaa;font-size:13px;font-family:'Inter';margin:0;">Erika Res · Architecture</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
+          <button onclick="showToast('Waved back 👋')" style="padding:8px 14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);">Wave back</button>
+          <button onclick="this.closest('.connect-card').style.opacity='0.3'" style="padding:8px 14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#adaaaa;background:#1e1e1e;">Pass</button>
+        </div>
+      </div>
+
+      <div class="connect-card">
+        <div style="width:52px;height:52px;border-radius:999px;background:#1a1919;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="ph-fill ph-user" style="font-size:24px;color:#262626;"></i>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin:0 0 2px;">Thabo</p>
+          <p style="color:#adaaaa;font-size:13px;font-family:'Inter';margin:0;">Loftus Res · Computer Sci</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
+          <button onclick="showToast('Waved back 👋')" style="padding:8px 14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);">Wave back</button>
+          <button onclick="this.closest('.connect-card').style.opacity='0.3'" style="padding:8px 14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#adaaaa;background:#1e1e1e;">Pass</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECRET CRUSHES ── -->
+  <div id="panel-secret" style="display:none;">
+    <p style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#adaaaa;margin-bottom:12px;">Your secret crushes</p>
+
+    <!-- Mutual crush revealed -->
+    <div style="background:linear-gradient(135deg,rgba(167,139,250,0.12),rgba(124,58,237,0.08));border:1px solid rgba(167,139,250,0.2);border-radius:20px;padding:16px;margin-bottom:10px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:52px;height:52px;border-radius:999px;background:#1e1e1e;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid rgba(167,139,250,0.4);">
+          <i class="ph-fill ph-user" style="font-size:24px;color:#262626;"></i>
+        </div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+            <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin:0;">Lerato</p>
+            <span style="font-size:10px;font-family:'Syne',sans-serif;font-weight:700;color:#a78bfa;background:rgba(167,139,250,0.15);padding:2px 8px;border-radius:999px;">Mutual crush ✨</span>
+          </div>
+          <p style="color:#adaaaa;font-size:13px;font-family:'Inter';margin:0;">She vibed you back. It's mutual now.</p>
+        </div>
+      </div>
+      <button onclick="showToast('Chat coming soon')" style="width:100%;margin-top:12px;padding:12px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;background:linear-gradient(135deg,#a78bfa,#7c3aed);box-shadow:0 0 16px rgba(167,139,250,0.3);">
+        Say something 💜
+      </button>
+    </div>
+
+    <!-- Pending crush (blurred) -->
+    <div class="secret-card" style="position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(13,10,26,0.5);z-index:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;">
+        <i class="ph ph-eye-slash" style="font-size:24px;color:#a78bfa;"></i>
+        <p style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#a78bfa;margin:0;">Still a secret</p>
+      </div>
+      <div style="width:52px;height:52px;border-radius:999px;background:#262626;flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin:0 0 2px;">???</p>
+        <p style="color:#adaaaa;font-size:13px;margin:0;">Waiting for them to vibe back</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Anonymous compliment received -->
+  <div style="margin-top:24px;background:#131313;border-radius:20px;padding:16px;">
+    <p style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;" class="grad-text">Anonymous compliments 🎁</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#1a1919;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">🔥</span>
+        <p style="font-size:14px;font-family:'Inter';margin:0;color:#fff;">"your fit was 🔥 today"</p>
+      </div>
+      <div style="background:#1a1919;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">✨</span>
+        <p style="font-size:14px;font-family:'Inter';margin:0;color:#fff;">"certified main character"</p>
+      </div>
+      <p style="color:#484847;font-size:12px;font-family:'Inter';text-align:center;margin-top:4px;">Connect more to find out who sent these</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="glass-nav" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);width:90%;max-width:448px;border-radius:40px;z-index:50;box-shadow:0 4px 24px rgba(240,78,48,0.22);">
+  <div style="display:flex;justify-content:space-around;align-items:center;padding:8px;">
+    <a href="index.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;color:#adaaaa;text-decoration:none;transition:color 0.15s;">
+      <i class="ph ph-compass" style="font-size:22px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Discover</span>
+    </a>
+    <a href="connects.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;border-radius:999px;text-decoration:none;background:linear-gradient(135deg,#FF6B35,#F04E30);color:#fff;box-shadow:0 0 18px rgba(255,107,53,0.45);">
+      <i class="ph-fill ph-heart" style="font-size:22px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Connects</span>
+    </a>
+    <a href="#" onclick="showToast('Chat coming soon');return false;" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;color:#adaaaa;text-decoration:none;">
+      <i class="ph ph-chat-circle-dots" style="font-size:22px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Chat</span>
+    </a>
+    <a href="../user_profile/code.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;color:#adaaaa;text-decoration:none;">
+      <i class="ph ph-user" style="font-size:22px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Profile</span>
+    </a>
+  </div>
+</nav>
+
+<div id="toast"></div>
+
+<script>
+let toastTmr=null;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTmr);
+  toastTmr=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+function switchTab(name){
+  ['mutual','waves','secret'].forEach(t=>{
+    document.getElementById('panel-'+t).style.display = t===name?'block':'none';
+    const btn=document.getElementById('tab-'+t);
+    btn.className = t===name?'tab-on':'tab-off';
+    btn.style.cssText='padding:8px 18px;border-radius:999px;border:none;cursor:pointer;font-family:Syne,sans-serif;font-weight:700;font-size:13px;transition:all 0.2s;';
+  });
+}
+</script>
+</body>
+</html>

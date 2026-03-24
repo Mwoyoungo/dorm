@@ -5,732 +5,796 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Stitch - Discover</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<!-- Fonts: Syne (headlines) + Inter (body) -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<!-- Phosphor Icons -->
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css"/>
+<script>
   tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "on-primary": "#591700", "secondary-dim": "#ff7257", "surface-variant": "#262626",
-          "on-tertiary": "#6c2a14", "on-secondary-fixed-variant": "#a01800",
-          "inverse-on-surface": "#565555", "secondary-fixed-dim": "#ffb0a0",
-          "inverse-surface": "#fcf9f8", "tertiary": "#ffb199", "primary": "#ff906a",
-          "on-background": "#ffffff", "tertiary-dim": "#ee9073", "primary-dim": "#ff7442",
-          "background": "#0e0e0e", "secondary": "#ff7257", "on-secondary": "#470500",
-          "on-tertiary-container": "#5f200b", "secondary-fixed": "#ffc4b8",
-          "surface": "#0e0e0e", "on-tertiary-fixed": "#3e0c00", "inverse-primary": "#ac3500",
-          "tertiary-container": "#fe9d7f", "on-error-container": "#ffa8a3",
-          "surface-container": "#1a1919", "error": "#ff716c",
-          "surface-container-lowest": "#000000", "error-container": "#9f0519",
-          "primary-fixed": "#ff7949", "on-secondary-container": "#fff6f4",
-          "surface-dim": "#0e0e0e", "on-error": "#490006", "tertiary-fixed-dim": "#ee9073",
-          "on-secondary-fixed": "#6c0d00", "on-tertiary-fixed-variant": "#6a2913",
-          "outline": "#767575", "surface-tint": "#ff906a", "tertiary-fixed": "#fe9d7f",
-          "primary-container": "#ff7949", "on-surface": "#ffffff", "outline-variant": "#484847",
-          "on-primary-container": "#451000", "error-dim": "#d7383b", "surface-bright": "#2c2c2c",
-          "secondary-container": "#b62409", "on-surface-variant": "#adaaaa",
-          "surface-container-low": "#131313", "surface-container-high": "#201f1f",
-          "on-primary-fixed-variant": "#551600", "on-primary-fixed": "#000000",
-          "surface-container-highest": "#262626", "primary-fixed-dim": "#f7652f"
-        },
-        fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"], "label": ["Inter"] },
-        borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+    darkMode:"class",
+    theme:{ extend:{
+      colors:{
+        "primary":"#ff906a","background":"#0e0e0e","surface":"#0e0e0e",
+        "surface-container":"#1a1919","surface-container-low":"#131313",
+        "surface-container-high":"#201f1f","surface-container-highest":"#262626",
+        "surface-bright":"#2c2c2c","on-surface":"#ffffff","on-surface-variant":"#adaaaa",
+        "outline-variant":"#484847","tertiary":"#ffb199"
       },
-    },
+      fontFamily:{ headline:["Syne","sans-serif"], body:["Inter","sans-serif"], label:["Inter","sans-serif"] },
+      borderRadius:{ DEFAULT:"1rem", lg:"2rem", xl:"3rem", full:"9999px" }
+    }}
   }
 </script>
 <style>
-  body { min-height: max(884px, 100dvh); }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{min-height:max(884px,100dvh);font-family:'Inter',sans-serif;background:#0e0e0e;color:#fff;overflow-x:hidden;}
 
-  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-  .icon-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  /* Glass layers */
+  .glass-top  {background:rgba(14,14,14,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+  .glass-nav  {background:rgba(20,19,19,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+  .glass-card {background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+  .glass-dark {background:rgba(0,0,0,0.58);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+  .glass-sheet{background:#111;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
 
-  .topbar-glass { background: rgba(14,14,14,0.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-  .nav-glass { background: rgba(26,25,25,0.85); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-  .glass-action { background: rgba(255,255,255,0.13); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-  .intent-pill { background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-  .proximity-pill { background: rgba(255,255,255,0.10); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-
-  /* Status bar - WhatsApp vibe */
-  .status-bar { background: rgba(0,0,0,0.60); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-
-  /* Context switcher */
-  .ctx-active { background: linear-gradient(135deg,#FF6B35,#F04E30); color:#fff; box-shadow: 0 0 14px rgba(255,107,53,0.40); }
-  .ctx-inactive { background: #262626; color: #adaaaa; }
-
-  /* Filter pills */
-  .fp-active { background: linear-gradient(135deg,#FF6B35,#F04E30); color:#fff; }
-  .fp-inactive { background: #262626; color: #adaaaa; }
-
-  /* Filter popover sheet */
-  #filter-sheet {
-    position: fixed; inset: 0; z-index: 90;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    pointer-events: none;
-  }
-  #filter-sheet.open { pointer-events: all; }
-
-  #filter-backdrop {
-    position: absolute; inset: 0;
-    background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
-    opacity: 0; transition: opacity 0.25s ease;
-  }
-  #filter-sheet.open #filter-backdrop { opacity: 1; }
-
-  #filter-panel {
-    position: relative; z-index: 1;
-    background: #131313; border-radius: 28px 28px 0 0;
-    padding: 24px 20px 40px;
-    transform: translateY(100%); transition: transform 0.30s cubic-bezier(0.32,0,0.18,1);
-    max-width: 448px; width: 100%; margin: 0 auto;
-  }
-  #filter-sheet.open #filter-panel { transform: translateY(0); }
+  /* Gradient */
+  .grad{background:linear-gradient(135deg,#FF6B35,#F04E30);}
+  .grad-text{background:linear-gradient(135deg,#FF6B35,#F04E30);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .grad-glow{box-shadow:0 0 24px rgba(255,107,53,0.5),0 4px 16px rgba(240,78,48,0.3);}
 
   /* Card stack */
-  .card-wrap { position: relative; width: 100%; height: 560px; touch-action: none; }
-
-  .card-slot { position: absolute; inset: 0; border-radius: 40px; overflow: hidden; will-change: transform; transition: transform 0.3s ease, opacity 0.3s ease; }
-  .card-slot.c3 { transform: scale(0.88) translateY(24px); opacity: 0.35; filter: blur(2px); z-index: 1; }
-  .card-slot.c2 { transform: scale(0.94) translateY(12px); opacity: 0.65; z-index: 2; }
-  .card-slot.c1 { transform: scale(1) translateY(0); opacity: 1; z-index: 3; cursor: grab; }
-  .card-slot.c1:active { cursor: grabbing; }
+  .card-wrap{position:relative;width:100%;height:570px;touch-action:none;user-select:none;}
+  .card-slot{position:absolute;inset:0;border-radius:36px;overflow:hidden;will-change:transform;transition:transform 0.32s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.32s ease,filter 0.32s ease;}
+  .c3{transform:scale(0.88) translateY(26px);opacity:0.32;filter:blur(3px);z-index:1;}
+  .c2{transform:scale(0.94) translateY(13px);opacity:0.62;z-index:2;}
+  .c1{transform:scale(1) translateY(0);opacity:1;z-index:3;cursor:grab;}
+  .c1:active{cursor:grabbing;}
 
   /* Swipe labels */
-  .swipe-label-connect {
-    position: absolute; top: 28px; left: 20px; z-index: 10;
-    border: 3px solid #4ade80; color: #4ade80;
-    font-family: 'Plus Jakarta Sans'; font-weight: 900; font-size: 22px;
-    letter-spacing: 0.12em; padding: 4px 14px; border-radius: 8px;
-    opacity: 0; transform: rotate(-15deg); pointer-events: none;
-    text-shadow: 0 0 12px rgba(74,222,128,0.5);
-  }
-  .swipe-label-pass {
-    position: absolute; top: 28px; right: 20px; z-index: 10;
-    border: 3px solid #f87171; color: #f87171;
-    font-family: 'Plus Jakarta Sans'; font-weight: 900; font-size: 22px;
-    letter-spacing: 0.12em; padding: 4px 14px; border-radius: 8px;
-    opacity: 0; transform: rotate(15deg); pointer-events: none;
-    text-shadow: 0 0 12px rgba(248,113,113,0.5);
-  }
-  .swipe-label-vibe {
-    position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
-    z-index: 10; border: 3px solid #a78bfa; color: #a78bfa;
-    font-family: 'Plus Jakarta Sans'; font-weight: 900; font-size: 22px;
-    letter-spacing: 0.12em; padding: 4px 14px; border-radius: 8px;
-    opacity: 0; pointer-events: none;
-    text-shadow: 0 0 12px rgba(167,139,250,0.5);
-  }
+  .lbl{position:absolute;z-index:10;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;letter-spacing:0.1em;padding:5px 14px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity 0.1s;}
+  .lbl-connect{top:24px;left:18px;border:3px solid #4ade80;color:#4ade80;transform:rotate(-14deg);text-shadow:0 0 14px rgba(74,222,128,0.6);}
+  .lbl-pass   {top:24px;right:18px;border:3px solid #f87171;color:#f87171;transform:rotate(14deg);text-shadow:0 0 14px rgba(248,113,113,0.6);}
+  .lbl-vibe   {bottom:80px;left:50%;transform:translateX(-50%);border:3px solid #a78bfa;color:#a78bfa;text-shadow:0 0 14px rgba(167,139,250,0.6);}
 
-  /* Action buttons */
-  .connect-btn {
-    background: linear-gradient(135deg,#FF6B35,#F04E30);
-    box-shadow: 0 0 26px rgba(255,107,53,0.55), 0 4px 16px rgba(240,78,48,0.30);
-  }
-  .vibe-btn { background: rgba(167,139,250,0.18); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-  .join-btn { background: rgba(74,222,128,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  /* Action buttons on card */
+  .act-connect{background:linear-gradient(135deg,#FF6B35,#F04E30);box-shadow:0 0 28px rgba(255,107,53,0.6);}
+  .act-vibe   {background:rgba(167,139,250,0.18);backdrop-filter:blur(8px);}
+  .act-join   {background:rgba(74,222,128,0.14);backdrop-filter:blur(8px);}
+  .act-wave   {background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);}
+  .act-gift   {background:rgba(255,200,87,0.14);backdrop-filter:blur(8px);}
 
-  /* Button pulse */
-  @keyframes btn-pulse { 0%{transform:scale(1)} 40%{transform:scale(0.85)} 70%{transform:scale(1.10)} 100%{transform:scale(1)} }
-  .btn-pulse { animation: btn-pulse 0.30s ease-out forwards; }
+  /* Fly animations */
+  @keyframes fly-r{to{transform:translateX(130%) rotate(28deg);opacity:0;}}
+  @keyframes fly-l{to{transform:translateX(-130%) rotate(-28deg);opacity:0;}}
+  @keyframes fly-u{to{transform:translateY(-130%) scale(0.82);opacity:0;}}
+  .fly-r{animation:fly-r 0.4s ease-in forwards;}
+  .fly-l{animation:fly-l 0.4s ease-in forwards;}
+  .fly-u{animation:fly-u 0.4s ease-in forwards;}
 
-  /* Fly-off animations */
-  @keyframes fly-right { to { transform: translateX(120%) rotate(30deg); opacity: 0; } }
-  @keyframes fly-left  { to { transform: translateX(-120%) rotate(-30deg); opacity: 0; } }
-  @keyframes fly-up    { to { transform: translateY(-120%) scale(0.8); opacity: 0; } }
-  .fly-right { animation: fly-right 0.42s ease-in forwards; }
-  .fly-left  { animation: fly-left  0.42s ease-in forwards; }
-  .fly-up    { animation: fly-up    0.42s ease-in forwards; }
+  /* Pulse animation */
+  @keyframes pulse-scale{0%{transform:scale(1)}40%{transform:scale(0.84)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+  .do-pulse{animation:pulse-scale 0.28s ease-out forwards;}
 
-  /* Promote cards in */
-  @keyframes promote-c2 { from { transform: scale(0.94) translateY(12px); opacity: 0.65; } to { transform: scale(1) translateY(0); opacity: 1; } }
-  @keyframes promote-c3 { from { transform: scale(0.88) translateY(24px); opacity: 0.35; filter:blur(2px); } to { transform: scale(0.94) translateY(12px); opacity: 0.65; filter:blur(0); } }
+  /* Active now ring */
+  @keyframes ring-pulse{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,0.6)}60%{box-shadow:0 0 0 5px rgba(74,222,128,0)}}
+  .active-ring{animation:ring-pulse 2s ease-out infinite;}
+
+  /* Filter / sheet */
+  .sheet-wrap{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none;}
+  .sheet-wrap.open{pointer-events:all;}
+  .sheet-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);opacity:0;transition:opacity 0.25s;}
+  .sheet-wrap.open .sheet-backdrop{opacity:1;}
+  .sheet-panel{position:relative;z-index:1;background:#111;border-radius:28px 28px 0 0;padding:20px 20px 44px;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0,0.18,1);max-width:448px;width:100%;margin:0 auto;}
+  .sheet-wrap.open .sheet-panel{transform:translateY(0);}
+
+  /* Pill toggles */
+  .ctx-on {background:linear-gradient(135deg,#FF6B35,#F04E30);color:#fff;box-shadow:0 0 14px rgba(255,107,53,0.4);}
+  .ctx-off{background:#1e1e1e;color:#adaaaa;}
+  .fp-on  {background:linear-gradient(135deg,#FF6B35,#F04E30);color:#fff;}
+  .fp-off {background:#1e1e1e;color:#adaaaa;}
 
   /* Toast */
-  #toast {
-    position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: rgba(26,25,25,0.95); backdrop-filter: blur(16px);
-    color: #fff; font-family: 'Inter'; font-size: 13px; font-weight: 600;
-    padding: 10px 20px; border-radius: 999px;
-    opacity: 0; transition: opacity 0.25s, transform 0.25s;
-    pointer-events: none; z-index: 200; white-space: nowrap;
-  }
-  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #toast{position:fixed;bottom:108px;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(20,19,19,0.96);backdrop-filter:blur(16px);color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;padding:10px 20px;border-radius:999px;opacity:0;transition:opacity 0.22s,transform 0.22s;pointer-events:none;z-index:200;white-space:nowrap;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-  /* Empty state */
-  #empty-state { display: none; flex-direction: column; align-items: center; justify-content: center; height: 560px; gap: 12px; }
+  /* Match overlay */
+  #match-overlay{position:fixed;inset:0;z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:0;background:radial-gradient(ellipse at center, rgba(255,107,53,0.18) 0%, #0e0e0e 70%);}
+  #match-overlay.show{display:flex;}
+  @keyframes match-pop{0%{transform:scale(0.7);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+  .match-pop{animation:match-pop 0.42s cubic-bezier(0.34,1.56,0.64,1) forwards;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .float{animation:float 3s ease-in-out infinite;}
 
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  /* Secret crush overlay */
+  #crush-overlay{position:fixed;inset:0;z-index:280;display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:48px;}
+  #crush-overlay.show{display:flex;}
+  .crush-panel{background:#111;border-radius:28px;padding:28px 24px;width:calc(100% - 40px);max-width:400px;text-align:center;}
 
-  /* gradient text */
-  .grad-text { background: linear-gradient(135deg,#FF6B35,#F04E30); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  /* Compliment sheet (reuses sheet-wrap) */
 
-  /* Profile dot indicator */
-  .dot-active { background: linear-gradient(135deg,#FF6B35,#F04E30); }
-  .dot-inactive { background: rgba(255,255,255,0.25); }
+  /* Profile expand */
+  #profile-expand{position:fixed;inset:0;z-index:250;background:#0e0e0e;transform:translateY(100%);transition:transform 0.36s cubic-bezier(0.32,0,0.18,1);overflow-y:auto;}
+  #profile-expand.open{transform:translateY(0);}
+
+  /* Dots */
+  .dot-on{background:linear-gradient(135deg,#FF6B35,#F04E30);}
+  .dot-off{background:rgba(255,255,255,0.22);}
+
+  /* Undo button */
+  #undo-btn{position:fixed;bottom:112px;right:20px;z-index:60;width:44px;height:44px;border-radius:999px;background:#1e1e1e;border:none;color:#adaaaa;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0.8);transition:opacity 0.2s,transform 0.2s;pointer-events:none;}
+  #undo-btn.show{opacity:1;transform:scale(1);pointer-events:all;}
+
+  .no-scroll::-webkit-scrollbar{display:none;}
+  .no-scroll{-ms-overflow-style:none;scrollbar-width:none;}
+  select-none{user-select:none;}
 </style>
 </head>
-<body class="bg-background text-on-background font-body min-h-screen overflow-x-hidden select-none">
+<body class="select-none">
 
-<!-- ══════════════════════ TOP BAR ══════════════════════ -->
-<header class="fixed top-0 w-full z-50 topbar-glass">
+<!-- ═══════════ TOP BAR ═══════════ -->
+<header class="fixed top-0 w-full z-50 glass-top">
   <div class="flex justify-between items-center px-5 py-3.5 w-full max-w-md mx-auto">
 
-    <div class="w-9 h-9 rounded-full overflow-hidden ring-2 ring-primary/60 shrink-0">
-      <img alt="You" class="w-full h-full object-cover"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJj7WpDjwVL8iHB7t21wVS_lvzAeo7-esCI2IYRACVgHhdQLuLAGSEeMmHq-Foo23v0B0TcaUpOetldiVnXys01B2DqOFPhlLsfI2-DTOX7hbqxZMtfVuOJFRwvQX7IeWUwIN1ecZepP1kBuCwMEeVlbvW7zyHVHSe4I3XKmFGjweGWHKI9PlNUYnXJR9-VjC8QHJJHOdmgBlS5DBtX6H_bz3koNqE8IuQqW53lkfn331t1BgXh6w9axPZmvS_lvlOQY5rIxMomQ"/>
+    <!-- Avatar + completion ring -->
+    <div class="relative w-10 h-10 cursor-pointer" onclick="showToast('Profile 70% complete')">
+      <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="17" fill="none" stroke="#262626" stroke-width="3"/>
+        <circle cx="20" cy="20" r="17" fill="none" stroke="url(#prog)" stroke-width="3" stroke-dasharray="107" stroke-dashoffset="32" stroke-linecap="round"/>
+        <defs><linearGradient id="prog" x1="0%" y1="0%" x2="100%"><stop offset="0%" stop-color="#FF6B35"/><stop offset="100%" stop-color="#F04E30"/></linearGradient></defs>
+      </svg>
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJj7WpDjwVL8iHB7t21wVS_lvzAeo7-esCI2IYRACVgHhdQLuLAGSEeMmHq-Foo23v0B0TcaUpOetldiVnXys01B2DqOFPhlLsfI2-DTOX7hbqxZMtfVuOJFRwvQX7IeWUwIN1ecZepP1kBuCwMEeVlbvW7zyHVHSe4I3XKmFGjweGWHKI9PlNUYnXJR9-VjC8QHJJHOdmgBlS5DBtX6H_bz3koNqE8IuQqW53lkfn331t1BgXh6w9axPZmvS_lvlOQY5rIxMomQ"
+        alt="You" class="absolute inset-[3px] w-[calc(100%-6px)] h-[calc(100%-6px)] rounded-full object-cover"/>
     </div>
 
-    <h1 class="font-headline text-xl font-black italic tracking-tight grad-text select-none">Stitch</h1>
+    <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;font-style:italic;letter-spacing:-0.02em;" class="grad-text select-none">Stitch</h1>
 
-    <div class="flex items-center gap-1">
-      <!-- Notification bell with badge -->
-      <button id="bell-btn" class="relative text-on-surface-variant hover:text-white transition-colors p-2 rounded-full active:scale-90 duration-150" onclick="showToast('3 new waves 👋')">
-        <span class="material-symbols-outlined" style="font-size:22px;">notifications</span>
-        <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-gradient-to-br from-[#FF6B35] to-[#F04E30]"></span>
+    <div class="flex items-center gap-0.5">
+      <button class="relative p-2 rounded-full text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150" onclick="showToast('3 new waves 👋')">
+        <i class="ph-duotone ph-bell" style="font-size:22px;"></i>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full grad"></span>
       </button>
-      <!-- Filter / tune — opens sheet -->
-      <button class="text-on-surface-variant hover:text-white transition-colors p-2 rounded-full active:scale-90 duration-150" onclick="openFilterSheet()">
-        <span class="material-symbols-outlined" style="font-size:22px;">tune</span>
+      <button class="p-2 rounded-full text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150" onclick="openSheet('filter-sheet')">
+        <i class="ph ph-sliders-horizontal" style="font-size:22px;"></i>
       </button>
     </div>
-
   </div>
 </header>
 
-<!-- context switcher removed — lives in filter sheet now -->
+<!-- ═══════════ MAIN ═══════════ -->
+<main class="pt-[68px] pb-36 px-4 flex flex-col items-center max-w-md mx-auto">
 
-<!-- ══════════════════════ MAIN ══════════════════════ -->
-<main class="pt-[72px] pb-36 px-4 flex flex-col items-center max-w-md mx-auto">
-
-  <!-- ── CARD STACK ── -->
+  <!-- CARD STACK -->
   <div class="card-wrap" id="card-stack">
 
-    <!-- EMPTY STATE (shown when all cards swiped) -->
-    <div id="empty-state" class="flex flex-col items-center justify-center h-full gap-4">
-      <span class="material-symbols-outlined grad-text" style="font-size:64px;">sentiment_satisfied</span>
-      <p class="font-headline text-xl font-bold text-white">You've seen everyone</p>
-      <p class="text-on-surface-variant text-sm text-center">Check back later or expand your search</p>
-      <button class="mt-2 px-6 py-2.5 rounded-full font-semibold text-sm text-white" style="background:linear-gradient(135deg,#FF6B35,#F04E30);" onclick="resetCards()">Start over</button>
+    <div id="empty-state" style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;">
+      <i class="ph-duotone ph-smiley" style="font-size:64px;color:#FF6B35;"></i>
+      <p style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;">You've seen everyone</p>
+      <p style="color:#adaaaa;font-size:14px;text-align:center;">Check back later or widen your search</p>
+      <button onclick="resetCards()" style="margin-top:8px;padding:12px 28px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);">Start over</button>
     </div>
 
-    <!-- ░░░░ CARD SLOT — c3 (back, placeholder) ░░░░ -->
-    <div class="card-slot c3" id="slot-c3">
-      <div class="w-full h-full bg-surface-container-low flex items-end pb-8 px-6">
-        <div class="w-full">
-          <div class="w-24 h-3 rounded-full bg-surface-bright mb-2"></div>
-          <div class="w-16 h-2 rounded-full bg-surface-bright/50"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ░░░░ CARD SLOT — c2 (middle, placeholder) ░░░░ -->
-    <div class="card-slot c2" id="slot-c2">
-      <div class="w-full h-full bg-surface-container flex items-end pb-8 px-6">
-        <div class="w-full">
-          <div class="w-28 h-3 rounded-full bg-surface-bright mb-2"></div>
-          <div class="w-20 h-2 rounded-full bg-surface-bright/50"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ░░░░ CARD SLOT — c1 (FRONT) ░░░░ -->
-    <div class="card-slot c1" id="slot-c1">
-      <!-- swipe labels -->
-      <div class="swipe-label-connect" id="lbl-connect">CONNECT</div>
-      <div class="swipe-label-pass"    id="lbl-pass">PASS</div>
-      <div class="swipe-label-vibe"    id="lbl-vibe">VIBE ✦</div>
-
-      <!-- card content injected by JS -->
-    </div>
-
+    <div class="card-slot c3" id="slot-c3"></div>
+    <div class="card-slot c2" id="slot-c2"></div>
+    <div class="card-slot c1" id="slot-c1"></div>
   </div>
-  <!-- end card stack -->
 
-  <!-- ── PHOTO DOTS ── -->
-  <div class="flex gap-1.5 mt-3" id="photo-dots"></div>
+  <!-- PHOTO DOTS -->
+  <div class="flex gap-1.5 mt-3 h-2" id="photo-dots"></div>
 
-  <!-- ── BIO PEEK ── -->
-  <div class="w-full mt-5 space-y-3" id="bio-peek">
-    <div class="bg-surface-container-low p-5 rounded-[20px]">
-      <h3 class="grad-text font-headline text-[10px] font-bold uppercase tracking-widest mb-2">My Vibe</h3>
-      <p class="text-on-surface-variant text-sm leading-relaxed" id="bio-text">Loading...</p>
+  <!-- BIO PEEK -->
+  <div class="w-full mt-4 space-y-3" id="bio-peek">
+    <div style="background:#131313;border-radius:20px;padding:18px 20px;">
+      <p style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;" class="grad-text">My Vibe</p>
+      <p style="color:#adaaaa;font-size:14px;line-height:1.6;" id="bio-text"></p>
     </div>
     <div class="flex gap-3" id="stat-cards"></div>
   </div>
 
 </main>
 
-<!-- ══════════════════════ BOTTOM NAV ══════════════════════ -->
-<nav class="fixed bottom-5 left-1/2 -translate-x-1/2 w-[90%] rounded-[40px] z-50 nav-glass shadow-[0_4px_20px_rgba(240,78,48,0.25)] max-w-md">
+<!-- ═══════════ BOTTOM NAV ═══════════ -->
+<nav class="fixed bottom-5 left-1/2 -translate-x-1/2 w-[90%] max-w-md rounded-[40px] z-50 glass-nav" style="box-shadow:0 4px 24px rgba(240,78,48,0.22);">
   <div class="flex justify-around items-center px-2 py-2">
-    <a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#FF6B35] to-[#F04E30] text-white rounded-full p-3 shadow-[0_0_18px_rgba(255,107,53,0.45)] active:scale-90 duration-200" href="#">
-      <span class="material-symbols-outlined icon-filled" style="font-size:22px;">explore</span>
-      <span class="font-label text-[10px] font-semibold tracking-wide uppercase mt-0.5">Discover</span>
+    <a href="#" class="flex flex-col items-center gap-0.5 p-3 rounded-full grad grad-glow text-white active:scale-90 duration-150">
+      <i class="ph-fill ph-compass" style="font-size:22px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Discover</span>
     </a>
-    <a class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:text-white transition-all active:scale-90 duration-200 relative" href="#" onclick="showToast('2 new connects 🔥'); return false;">
-      <span class="material-symbols-outlined" style="font-size:22px;">favorite</span>
-      <span class="font-label text-[10px] font-semibold tracking-wide uppercase mt-0.5">Connects</span>
-      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#FF6B35]"></span>
+    <a href="connects.html" class="relative flex flex-col items-center gap-0.5 p-3 text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150">
+      <i class="ph ph-heart" style="font-size:22px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Connects</span>
+      <span class="absolute top-2 right-2 w-2 h-2 rounded-full" style="background:#FF6B35;"></span>
     </a>
-    <a class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:text-white transition-all active:scale-90 duration-200" href="#" onclick="showToast('Chat coming soon'); return false;">
-      <span class="material-symbols-outlined" style="font-size:22px;">forum</span>
-      <span class="font-label text-[10px] font-semibold tracking-wide uppercase mt-0.5">Chat</span>
+    <a href="#" onclick="showToast('Chat coming soon');return false;" class="flex flex-col items-center gap-0.5 p-3 text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150">
+      <i class="ph ph-chat-circle-dots" style="font-size:22px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Chat</span>
     </a>
-    <a class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:text-white transition-all active:scale-90 duration-200" href="../user_profile/code.html">
-      <span class="material-symbols-outlined" style="font-size:22px;">person</span>
-      <span class="font-label text-[10px] font-semibold tracking-wide uppercase mt-0.5">Profile</span>
+    <a href="../user_profile/code.html" class="flex flex-col items-center gap-0.5 p-3 text-[#adaaaa] hover:text-white transition-colors active:scale-90 duration-150">
+      <i class="ph ph-user" style="font-size:22px;"></i>
+      <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Profile</span>
     </a>
   </div>
 </nav>
 
-<!-- ══════════════════════ FILTER SHEET ══════════════════════ -->
-<div id="filter-sheet" onclick="handleSheetClick(event)">
-  <div id="filter-backdrop"></div>
-  <div id="filter-panel">
+<!-- ═══════════ UNDO BUTTON ═══════════ -->
+<button id="undo-btn" onclick="undoSwipe()" title="Undo">
+  <i class="ph ph-arrow-counter-clockwise" style="font-size:20px;"></i>
+</button>
 
-    <!-- Handle -->
-    <div style="width:36px;height:4px;border-radius:999px;background:#333;margin:0 auto 24px;"></div>
+<!-- ═══════════ FILTER SHEET ═══════════ -->
+<div class="sheet-wrap" id="filter-sheet" onclick="handleBackdrop(event,'filter-sheet')">
+  <div class="sheet-backdrop"></div>
+  <div class="sheet-panel">
+    <div style="width:36px;height:4px;border-radius:999px;background:#2a2a2a;margin:0 auto 22px;"></div>
 
-    <!-- Section: Show me -->
-    <p style="color:#adaaaa;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;font-family:Inter;margin-bottom:10px;">Show me</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
-      <button class="ctx-active  shrink-0 px-5 py-2 rounded-full text-sm font-semibold font-label" onclick="setContext(this)">My Block</button>
-      <button class="ctx-inactive shrink-0 px-5 py-2 rounded-full text-sm font-semibold font-label" onclick="setContext(this)">Campus</button>
-      <button class="ctx-inactive shrink-0 px-5 py-2 rounded-full text-sm font-semibold font-label" onclick="setContext(this)">Everyone</button>
+    <p style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#adaaaa;margin-bottom:10px;">Show me</p>
+    <div class="flex gap-2 flex-wrap mb-6">
+      <button class="ctx-on  px-5 py-2 rounded-full text-sm font-semibold transition-all" style="font-family:'Syne',sans-serif;" onclick="toggleCtx(this)">My Block</button>
+      <button class="ctx-off px-5 py-2 rounded-full text-sm font-semibold transition-all" style="font-family:'Syne',sans-serif;" onclick="toggleCtx(this)">Campus</button>
+      <button class="ctx-off px-5 py-2 rounded-full text-sm font-semibold transition-all" style="font-family:'Syne',sans-serif;" onclick="toggleCtx(this)">Everyone</button>
     </div>
 
-    <!-- Section: Looking for -->
-    <p style="color:#adaaaa;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;font-family:Inter;margin-bottom:10px;">Looking for</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;">
-      <button class="fp-active  shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Everyone</button>
-      <button class="fp-inactive shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Hang</button>
-      <button class="fp-inactive shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Study</button>
-      <button class="fp-inactive shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Date</button>
-      <button class="fp-inactive shrink-0 text-sm font-semibold font-label px-5 py-2 rounded-full" onclick="setFilter(this)">Events</button>
+    <p style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#adaaaa;margin-bottom:10px;">Looking for</p>
+    <div class="flex gap-2 flex-wrap mb-8">
+      <button class="fp-on  px-5 py-2 rounded-full text-sm font-semibold transition-all" style="font-family:'Syne',sans-serif;" onclick="toggleFp(this)">Everyone</button>
+      <button class="fp-off px-5 py-2 rounded-full text-sm font-semibold transition-all" style="font-family:'Syne',sans-serif;" onclick="toggleFp(this)">Hang</button>
+      <button class="fp-off px-5 py-2 rounded-full text-sm font-semibold transition-all" style="font-family:'Syne',sans-serif;" onclick="toggleFp(this)">Study</button>
+      <button class="fp-off px-5 py-2 rounded-full text-sm font-semibold transition-all" style="font-family:'Syne',sans-serif;" onclick="toggleFp(this)">Date</button>
+      <button class="fp-off px-5 py-2 rounded-full text-sm font-semibold transition-all" style="font-family:'Syne',sans-serif;" onclick="toggleFp(this)">Just Friends</button>
+      <button class="fp-off px-5 py-2 rounded-full text-sm font-semibold transition-all" style="font-family:'Syne',sans-serif;" onclick="toggleFp(this)">Events</button>
     </div>
 
-    <!-- Apply -->
-    <button onclick="closeFilterSheet()" style="width:100%;padding:14px;border-radius:999px;border:none;cursor:pointer;font-family:'Plus Jakarta Sans';font-weight:700;font-size:15px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);box-shadow:0 0 20px rgba(255,107,53,0.35);">
-      Apply filters
+    <button onclick="closeSheet('filter-sheet')" style="width:100%;padding:15px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);box-shadow:0 0 20px rgba(255,107,53,0.35);">
+      Apply
     </button>
   </div>
 </div>
 
-<!-- ══════════════════════ TOAST ══════════════════════ -->
+<!-- ═══════════ COMPLIMENT SHEET ═══════════ -->
+<div class="sheet-wrap" id="compliment-sheet" onclick="handleBackdrop(event,'compliment-sheet')">
+  <div class="sheet-backdrop"></div>
+  <div class="sheet-panel">
+    <div style="width:36px;height:4px;border-radius:999px;background:#2a2a2a;margin:0 auto 22px;"></div>
+    <p style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:4px;">Send a compliment <span style="font-style:normal;">🎁</span></p>
+    <p style="color:#adaaaa;font-size:13px;margin-bottom:20px;">They won't know it's you — unless you connect</p>
+    <div class="flex flex-col gap-2" id="compliment-list"></div>
+    <button onclick="closeSheet('compliment-sheet')" style="width:100%;margin-top:20px;padding:14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#adaaaa;background:#1e1e1e;">
+      Maybe later
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════ SECRET CRUSH OVERLAY ═══════════ -->
+<div id="crush-overlay" onclick="closeCrush()">
+  <div class="crush-panel" onclick="event.stopPropagation()">
+    <p style="font-size:32px;margin-bottom:8px;">✨</p>
+    <p style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px;">Secret Crush?</p>
+    <p style="color:#adaaaa;font-size:14px;line-height:1.5;margin-bottom:24px;" id="crush-text">They only find out if they Vibe you back. Keep it mysterious?</p>
+    <div class="flex gap-3">
+      <button onclick="confirmCrush(true)" style="flex:1;padding:14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;background:linear-gradient(135deg,#a78bfa,#7c3aed);box-shadow:0 0 18px rgba(167,139,250,0.35);">
+        <i class="ph ph-eye-slash" style="font-size:16px;margin-right:6px;"></i>Keep it secret
+      </button>
+      <button onclick="confirmCrush(false)" style="flex:1;padding:14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;background:#1e1e1e;">
+        Let them know
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MATCH OVERLAY ═══════════ -->
+<div id="match-overlay" onclick="closeMatch()">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(255,107,53,0.22) 0%,transparent 65%);pointer-events:none;"></div>
+
+  <!-- Floating hearts -->
+  <div id="match-hearts" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
+
+  <div class="match-pop float" style="text-align:center;padding:0 32px;z-index:1;">
+    <p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#FF6B35;margin-bottom:16px;">It's a match ✦</p>
+
+    <!-- Two avatars -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:-12px;margin-bottom:28px;">
+      <div style="width:88px;height:88px;border-radius:999px;border:3px solid #FF6B35;overflow:hidden;box-shadow:0 0 24px rgba(255,107,53,0.5);margin-right:-14px;z-index:2;">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJj7WpDjwVL8iHB7t21wVS_lvzAeo7-esCI2IYRACVgHhdQLuLAGSEeMmHq-Foo23v0B0TcaUpOetldiVnXys01B2DqOFPhlLsfI2-DTOX7hbqxZMtfVuOJFRwvQX7IeWUwIN1ecZepP1kBuCwMEeVlbvW7zyHVHSe4I3XKmFGjweGWHKI9PlNUYnXJR9-VjC8QHJJHOdmgBlS5DBtX6H_bz3koNqE8IuQqW53lkfn331t1BgXh6w9axPZmvS_lvlOQY5rIxMomQ" style="width:100%;height:100%;object-fit:cover;"/>
+      </div>
+      <div id="match-avatar" style="width:88px;height:88px;border-radius:999px;border:3px solid #FF6B35;overflow:hidden;box-shadow:0 0 24px rgba(255,107,53,0.5);z-index:1;">
+        <img id="match-avatar-img" src="" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+      </div>
+    </div>
+
+    <p style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;line-height:1.1;margin-bottom:8px;">You & <span id="match-name" class="grad-text"></span></p>
+    <p style="color:#adaaaa;font-size:14px;line-height:1.5;margin-bottom:32px;">Both of you swiped right. <br/>Say something first 👋</p>
+
+    <button onclick="closeMatch()" style="width:100%;padding:16px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:#fff;background:linear-gradient(135deg,#FF6B35,#F04E30);box-shadow:0 0 28px rgba(255,107,53,0.45);margin-bottom:12px;">
+      Send a message
+    </button>
+    <button onclick="closeMatch()" style="width:100%;padding:14px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;font-size:14px;color:#adaaaa;background:transparent;">
+      Keep swiping
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════ PROFILE EXPAND ═══════════ -->
+<div id="profile-expand">
+  <div style="max-width:448px;margin:0 auto;padding-bottom:60px;">
+
+    <!-- Close bar -->
+    <div style="position:sticky;top:0;z-index:10;background:rgba(14,14,14,0.9);backdrop-filter:blur(16px);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+      <button onclick="closeProfileExpand()" style="background:none;border:none;cursor:pointer;color:#adaaaa;display:flex;align-items:center;gap:6px;font-family:'Syne',sans-serif;font-size:14px;font-weight:600;">
+        <i class="ph ph-arrow-left" style="font-size:20px;"></i> Back
+      </button>
+      <button onclick="showToast('Reported')" style="background:none;border:none;cursor:pointer;color:#adaaaa;">
+        <i class="ph ph-dots-three" style="font-size:22px;"></i>
+      </button>
+    </div>
+
+    <!-- Hero photo -->
+    <div style="position:relative;width:100%;height:420px;overflow:hidden;" id="expand-hero">
+      <img id="expand-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+      <div style="position:absolute;inset-x:0;bottom:0;height:60%;background:linear-gradient(to top,rgba(0,0,0,0.9),transparent);"></div>
+      <div style="position:absolute;bottom:20px;left:20px;">
+        <h2 id="expand-name" style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#fff;margin:0;"></h2>
+        <p id="expand-res" style="color:#adaaaa;font-size:13px;margin-top:4px;display:flex;align-items:center;gap:4px;"></p>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div style="margin:16px 20px 0;background:#131313;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:10px;">
+      <span style="width:8px;height:8px;border-radius:999px;background:#4ade80;flex-shrink:0;"></span>
+      <p id="expand-status" style="color:rgba(255,255,255,0.85);font-size:13px;font-family:'Inter',sans-serif;margin:0;"></p>
+    </div>
+
+    <!-- Bio -->
+    <div style="margin:12px 20px 0;background:#131313;border-radius:16px;padding:18px;">
+      <p style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;" class="grad-text">My Vibe</p>
+      <p id="expand-bio" style="color:#adaaaa;font-size:14px;line-height:1.65;"></p>
+    </div>
+
+    <!-- Intent tags -->
+    <div style="margin:12px 20px 0;">
+      <p style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#adaaaa;margin-bottom:10px;">Open to</p>
+      <div id="expand-intents" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+    </div>
+
+    <!-- Stats -->
+    <div style="margin:16px 20px 0;display:flex;gap:10px;" id="expand-stats"></div>
+
+    <!-- Action row -->
+    <div style="margin:24px 20px 0;display:flex;gap:10px;">
+      <button onclick="triggerWave();closeProfileExpand();" style="flex:1;padding:15px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;background:#1e1e1e;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <i class="ph ph-hand-waving" style="font-size:18px;"></i> Wave
+      </button>
+      <button onclick="triggerConnect();closeProfileExpand();" style="flex:2;padding:15px;border-radius:999px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#FF6B35,#F04E30);box-shadow:0 0 20px rgba(255,107,53,0.4);">
+        <i class="ph-fill ph-heart" style="font-size:18px;"></i> Connect
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TOAST ═══════════ -->
 <div id="toast"></div>
 
-<!-- ══════════════════════ JS ══════════════════════ -->
+<!-- ═══════════ JS ═══════════ -->
 <script>
-// ─────────────────────────────────────────────────────────────
-// DATA — SA student profiles, Pretoria residences
-// ─────────────────────────────────────────────────────────────
+// ─── DATA ───────────────────────────────────────────────────
 const profiles = [
   {
-    name: "Naledi", age: 21,
-    course: "Law", year: "3rd Year",
-    res: "Sonop Res", room: "Room 214",
-    intents: ["down to hang", "study buddy"],
-    status: "📚 In the library, someone bring snacks",
-    vibe: "Moot court by day, bad reality TV by night. Will fight you about anything except pizza toppings.",
-    stats: [
-      { icon: "balance",       label: "Law",      sub: "Course" },
-      { icon: "calendar_today",label: "3rd Year",  sub: "Year" },
-      { icon: "bedtime",       label: "Night Owl", sub: "Vibe" },
-    ],
-    photo: "WhatsApp Image 2026-02-03 at 1.55.06 PM (1).jpeg",
-    photoCount: 3,
+    name:"Naledi", age:21,
+    course:"Law", year:"3rd Year",
+    res:"Sonop Res", room:"Room 214",
+    intents:["down to hang","study buddy"],
+    status:"📚 In the library, someone bring snacks",
+    vibe:"Moot court by day, bad reality TV by night. Will fight you about anything except pizza toppings.",
+    stats:[{icon:"ph-scales",label:"Law",sub:"Course"},{icon:"ph-calendar-blank",label:"3rd Year",sub:"Year"},{icon:"ph-moon-stars",label:"Night Owl",sub:"Vibe"}],
+    photo:"WhatsApp Image 2026-02-03 at 1.55.06 PM (1).jpeg",
+    photoCount:3, active:true,
   },
   {
-    name: "Sipho", age: 22,
-    course: "Engineering", year: "2nd Year",
-    res: "Kollege Res", room: "Room 08",
-    intents: ["gym partner", "open to dating"],
-    status: "🏋️ Gym session done. Anyone want to grab a kota?",
-    vibe: "Mechanical engineering but my real passion is braai science. Weekends are for the boys... and maybe you.",
-    stats: [
-      { icon: "precision_manufacturing", label: "Engineering", sub: "Course" },
-      { icon: "calendar_today",           label: "2nd Year",    sub: "Year" },
-      { icon: "fitness_center",           label: "Gym Rat",     sub: "Vibe" },
-    ],
-    photo: null,
-    color: "#1a1919",
-    photoCount: 2,
+    name:"Sipho", age:22,
+    course:"Engineering", year:"2nd Year",
+    res:"Kollege Res", room:"Room 08",
+    intents:["gym partner","open to dating"],
+    status:"🏋️ Gym done. Anyone want to grab a kota?",
+    vibe:"Mechanical engineering but my real passion is braai science. Weekends are for the boys... and maybe you.",
+    stats:[{icon:"ph-gear",label:"Engineering",sub:"Course"},{icon:"ph-calendar-blank",label:"2nd Year",sub:"Year"},{icon:"ph-barbell",label:"Gym Rat",sub:"Vibe"}],
+    photo:null, color:"#141414", photoCount:2, active:true,
   },
   {
-    name: "Amahle", age: 20,
-    course: "Architecture", year: "1st Year",
-    res: "Erika Res", room: "Room 112",
-    intents: ["creative collab", "down to hang"],
-    status: "🎨 Busy with a design brief but my door is open",
-    vibe: "First year but already decorated my room better than yours. Sketchbook always in hand.",
-    stats: [
-      { icon: "architecture",  label: "Architecture", sub: "Course" },
-      { icon: "calendar_today",label: "1st Year",     sub: "Year" },
-      { icon: "palette",       label: "Creative",     sub: "Vibe" },
-    ],
-    photo: null,
-    color: "#131313",
-    photoCount: 5,
+    name:"Amahle", age:20,
+    course:"Architecture", year:"1st Year",
+    res:"Erika Res", room:"Room 112",
+    intents:["creative collab","just friends"],
+    status:"🎨 Busy with a design brief but my door is open",
+    vibe:"First year but already decorated my room better than yours. Sketchbook always in hand.",
+    stats:[{icon:"ph-pencil-ruler",label:"Architecture",sub:"Course"},{icon:"ph-calendar-blank",label:"1st Year",sub:"Year"},{icon:"ph-palette",label:"Creative",sub:"Vibe"}],
+    photo:null, color:"#0f1510", photoCount:5, active:false,
   },
   {
-    name: "Thabo", age: 23,
-    course: "Computer Sci", year: "4th Year",
-    res: "Loftus Res", room: "Room 303",
-    intents: ["study buddy", "gaming"],
-    status: "💻 Debugging since 2pm. Send help (or Nandos)",
-    vibe: "Final year dev. Built 3 apps, none of them finished. Looking for someone to procrastinate productively with.",
-    stats: [
-      { icon: "code",           label: "CS",       sub: "Course" },
-      { icon: "calendar_today", label: "4th Year", sub: "Year" },
-      { icon: "terminal",       label: "Dev Mode", sub: "Vibe" },
-    ],
-    photo: null,
-    color: "#0f0f0f",
-    photoCount: 1,
+    name:"Thabo", age:23,
+    course:"Computer Sci", year:"4th Year",
+    res:"Loftus Res", room:"Room 303",
+    intents:["study buddy","gaming"],
+    status:"💻 Debugging since 2pm. Send help (or Nandos)",
+    vibe:"Final year dev. Built 3 apps, none finished. Looking for someone to procrastinate productively with.",
+    stats:[{icon:"ph-code",label:"Comp Sci",sub:"Course"},{icon:"ph-calendar-blank",label:"4th Year",sub:"Year"},{icon:"ph-terminal-window",label:"Dev Mode",sub:"Vibe"}],
+    photo:null, color:"#0f0f14", photoCount:1, active:false,
   },
   {
-    name: "Lerato", age: 21,
-    course: "Psychology", year: "3rd Year",
-    res: "Minerva Res", room: "Room 07",
-    intents: ["deep convos", "open to dating"],
-    status: "☕ At the Hatfield Mugg & Bean if anyone wants to join",
-    vibe: "Psych student who will absolutely analyse what you just said. Certified empath. Terrible at keeping plants alive.",
-    stats: [
-      { icon: "psychology",     label: "Psychology", sub: "Course" },
-      { icon: "calendar_today", label: "3rd Year",   sub: "Year" },
-      { icon: "wb_sunny",       label: "Morning",    sub: "Vibe" },
-    ],
-    photo: null,
-    color: "#161616",
-    photoCount: 4,
+    name:"Lerato", age:21,
+    course:"Psychology", year:"3rd Year",
+    res:"Minerva Res", room:"Room 07",
+    intents:["deep convos","open to dating"],
+    status:"☕ At Hatfield Mugg & Bean if anyone wants to join",
+    vibe:"Psych student who will absolutely analyse what you just said. Certified empath. Terrible at keeping plants alive.",
+    stats:[{icon:"ph-brain",label:"Psychology",sub:"Course"},{icon:"ph-calendar-blank",label:"3rd Year",sub:"Year"},{icon:"ph-sun",label:"Morning",sub:"Vibe"}],
+    photo:null, color:"#14100f", photoCount:4, active:true,
   },
 ];
 
-// ─────────────────────────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────────────────────────
-let currentIndex = 0; // which profile is on c1
-let isDragging = false, startX = 0, startY = 0, currentX = 0, currentY = 0;
-let toastTimer = null;
+const compliments = [
+  "your fit was 🔥 today","you seem like really good people","10/10 would grab food with",
+  "your energy is unmatched fr","you look like you give great advice","certified main character",
+  "your vibe is immaculate","you seem like you'd be a fun friend",
+];
+
+// ─── STATE ──────────────────────────────────────────────────
+let idx = 0;
+let isDrag = false, sx = 0, sy = 0, cx = 0, cy = 0;
+let history = [];
+let toastTmr = null;
+let pendingCrush = false;
 
 const slot1 = document.getElementById('slot-c1');
 const slot2 = document.getElementById('slot-c2');
 const slot3 = document.getElementById('slot-c3');
-const lblConnect = document.getElementById('lbl-connect');
-const lblPass    = document.getElementById('lbl-pass');
-const lblVibe    = document.getElementById('lbl-vibe');
 const emptyState = document.getElementById('empty-state');
-const photoDots  = document.getElementById('photo-dots');
-const bioText    = document.getElementById('bio-text');
-const statCards  = document.getElementById('stat-cards');
 
-// ─────────────────────────────────────────────────────────────
-// RENDER
-// ─────────────────────────────────────────────────────────────
-function renderCard(slotEl, profileIdx, slotClass) {
-  if (profileIdx >= profiles.length) {
-    slotEl.innerHTML = '';
-    slotEl.style.visibility = 'hidden';
-    return;
-  }
-  slotEl.style.visibility = 'visible';
-  const p = profiles[profileIdx];
+// ─── RENDER ─────────────────────────────────────────────────
+function renderCard(el, i, isFront) {
+  if (i >= profiles.length) { el.innerHTML=''; el.style.visibility='hidden'; return; }
+  el.style.visibility = 'visible';
+  const p = profiles[i];
 
-  if (slotClass === 'c1') {
-    slotEl.innerHTML = `
-      <div class="swipe-label-connect" id="lbl-connect">CONNECT</div>
-      <div class="swipe-label-pass"    id="lbl-pass">PASS</div>
-      <div class="swipe-label-vibe"    id="lbl-vibe">VIBE ✦</div>
-
-      <div class="w-full h-full relative" style="background:${p.color || '#1a1919'};">
-
+  if (isFront) {
+    el.innerHTML = `
+      <div class="lbl lbl-connect" id="lbl-c">CONNECT</div>
+      <div class="lbl lbl-pass"    id="lbl-p">PASS</div>
+      <div class="lbl lbl-vibe"    id="lbl-v">VIBE ✦</div>
+      <div style="position:relative;width:100%;height:100%;background:${p.color||'#141414'};" onclick="onCardTap(event)">
         ${p.photo
-          ? `<img src="${p.photo}" alt="${p.name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;" draggable="false"/>`
-          : `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined" style="font-size:96px;color:rgba(255,255,255,0.07);">person</span></div>`
+          ? `<img src="${p.photo}" draggable="false" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;pointer-events:none;"/>`
+          : `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><i class="ph ph-user" style="font-size:100px;color:rgba(255,255,255,0.05);"></i></div>`
         }
+        <!-- gradient -->
+        <div style="position:absolute;inset-x:0;bottom:0;height:62%;background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.45) 50%,transparent 100%);pointer-events:none;"></div>
 
-        <!-- Bottom gradient — deep enough for text legibility -->
-        <div style="position:absolute;inset-x:0;bottom:0;height:55%;background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.5) 50%,transparent 100%);"></div>
-
-        <!-- Top row: res badge + photo count -->
-        <div style="position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
-          <div class="proximity-pill" style="display:flex;align-items:center;gap:4px;padding:4px 12px;border-radius:999px;flex-shrink:0;">
-            <span class="material-symbols-outlined" style="font-size:12px;color:rgba(255,255,255,0.7);">apartment</span>
-            <span style="color:rgba(255,255,255,0.85);font-size:11px;font-weight:500;font-family:Inter;">${p.res}</span>
+        <!-- top row -->
+        <div style="position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;">
+          <div class="glass-dark" style="display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:999px;">
+            ${p.active ? `<span class="active-ring" style="width:7px;height:7px;border-radius:999px;background:#4ade80;flex-shrink:0;"></span>` : `<span style="width:7px;height:7px;border-radius:999px;background:#adaaaa;flex-shrink:0;"></span>`}
+            <span style="color:rgba(255,255,255,0.85);font-size:11px;font-weight:500;font-family:'Inter';">${p.res}</span>
           </div>
-          <div class="proximity-pill" style="display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;">
-            <span class="material-symbols-outlined" style="font-size:12px;color:rgba(255,255,255,0.6);">photo_library</span>
-            <span style="color:rgba(255,255,255,0.65);font-size:11px;font-family:Inter;">${p.photoCount}</span>
-          </div>
-        </div>
-
-        <!-- Status bar — WhatsApp vibe -->
-        <div style="position:absolute;top:52px;left:16px;right:16px;">
-          <div class="status-bar" style="border-radius:999px;padding:6px 14px;display:flex;align-items:center;gap:8px;">
-            <span style="width:7px;height:7px;border-radius:999px;background:#4ade80;flex-shrink:0;"></span>
-            <span style="color:rgba(255,255,255,0.88);font-size:12px;font-family:Inter;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.status}</span>
+          <div class="glass-dark" style="display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:999px;">
+            <i class="ph ph-images" style="font-size:12px;color:rgba(255,255,255,0.6);"></i>
+            <span style="color:rgba(255,255,255,0.65);font-size:11px;font-family:'Inter';">${p.photoCount}</span>
           </div>
         </div>
 
-        <!-- Bottom: name + intents only -->
-        <div style="position:absolute;bottom:20px;left:20px;right:68px;">
-          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
-            ${p.intents.map(i => `<span class="intent-pill" style="color:#fff;font-size:11px;font-family:Inter;font-weight:500;padding:4px 10px;border-radius:999px;">${i}</span>`).join('')}
+        <!-- status -->
+        <div style="position:absolute;top:50px;left:14px;right:14px;pointer-events:none;">
+          <div class="glass-dark" style="border-radius:999px;padding:6px 14px;display:flex;align-items:center;gap:8px;">
+            <span style="width:6px;height:6px;border-radius:999px;background:#4ade80;flex-shrink:0;"></span>
+            <span style="color:rgba(255,255,255,0.88);font-size:12px;font-family:'Inter';overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.status}</span>
           </div>
-          <h2 style="color:#fff;font-family:'Plus Jakarta Sans';font-size:28px;font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin:0;">${p.name}, ${p.age}</h2>
         </div>
 
-        <!-- Side action bar -->
-        <div style="position:absolute;right:12px;bottom:20px;display:flex;flex-direction:column;align-items:center;gap:12px;">
-          <button class="glass-action" style="width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fff;border:none;cursor:pointer;transition:transform 0.15s;" onclick="triggerWave()" title="Wave" onmousedown="this.style.transform='scale(0.88)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.88)'" ontouchend="this.style.transform='scale(1)'">
-            <span class="material-symbols-outlined" style="font-size:19px;">waving_hand</span>
+        <!-- name -->
+        <div style="position:absolute;bottom:18px;left:18px;right:66px;pointer-events:none;">
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+            ${p.intents.map(t=>`<span class="glass-dark" style="color:#fff;font-size:10px;font-family:'Inter';font-weight:500;padding:4px 10px;border-radius:999px;">${t}</span>`).join('')}
+          </div>
+          <h2 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;margin:0;line-height:1.1;letter-spacing:-0.02em;">${p.name}, ${p.age}</h2>
+        </div>
+
+        <!-- side actions -->
+        <div style="position:absolute;right:10px;bottom:18px;display:flex;flex-direction:column;align-items:center;gap:10px;">
+          <button class="act-wave" style="width:42px;height:42px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fff;border:none;cursor:pointer;" onclick="event.stopPropagation();triggerWave()">
+            <i class="ph ph-hand-waving" style="font-size:19px;"></i>
           </button>
-          <button class="connect-btn" style="width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fff;border:none;cursor:pointer;transition:transform 0.15s;" onclick="triggerConnect()" title="Connect" onmousedown="this.style.transform='scale(0.88)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.88)'" ontouchend="this.style.transform='scale(1)'">
-            <span class="material-symbols-outlined icon-filled" style="font-size:24px;">favorite</span>
+          <button class="act-connect" style="width:54px;height:54px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fff;border:none;cursor:pointer;" onclick="event.stopPropagation();triggerConnect()">
+            <i class="ph-fill ph-heart" style="font-size:24px;"></i>
           </button>
-          <button class="join-btn" style="width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#4ade80;border:none;cursor:pointer;transition:transform 0.15s;" onclick="triggerJoin()" title="Join" onmousedown="this.style.transform='scale(0.88)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.88)'" ontouchend="this.style.transform='scale(1)'">
-            <span class="material-symbols-outlined" style="font-size:19px;">group_add</span>
+          <button class="act-join" style="width:42px;height:42px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#4ade80;border:none;cursor:pointer;" onclick="event.stopPropagation();triggerJoin()">
+            <i class="ph ph-users-three" style="font-size:19px;"></i>
           </button>
-          <button class="vibe-btn" style="width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#a78bfa;border:none;cursor:pointer;transition:transform 0.15s;" onclick="triggerVibe()" title="Vibe" onmousedown="this.style.transform='scale(0.88)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.88)'" ontouchend="this.style.transform='scale(1)'">
-            <span class="material-symbols-outlined" style="font-size:19px;">auto_awesome</span>
+          <button class="act-gift" style="width:42px;height:42px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fbbf24;border:none;cursor:pointer;" onclick="event.stopPropagation();openCompliments()">
+            <i class="ph ph-gift" style="font-size:19px;"></i>
+          </button>
+          <button class="act-vibe" style="width:42px;height:42px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#a78bfa;border:none;cursor:pointer;" onclick="event.stopPropagation();triggerVibe()">
+            <i class="ph ph-star-four" style="font-size:19px;"></i>
           </button>
         </div>
-      </div>
-    `;
-    // re-grab label refs after re-render
-    setupSwipe();
+      </div>`;
+    setupDrag();
     updateBio(p);
     renderDots(p);
   } else {
-    const nextP = profiles[profileIdx];
-    slotEl.innerHTML = `
-      <div style="width:100%;height:100%;position:relative;background:${nextP?.color || '#131313'};">
-        ${nextP?.photo ? `<img src="${nextP.photo}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;" draggable="false"/>` : ''}
+    el.innerHTML = `
+      <div style="width:100%;height:100%;position:relative;background:${p.color||'#141414'};">
+        ${p.photo?`<img src="${p.photo}" draggable="false" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;"/>`:'' }
         <div style="position:absolute;inset-x:0;bottom:0;height:50%;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);"></div>
-        <div style="position:absolute;bottom:24px;left:20px;">
-          <div style="width:80px;height:10px;border-radius:999px;background:rgba(255,255,255,0.08);margin-bottom:8px;"></div>
-          <div style="width:56px;height:8px;border-radius:999px;background:rgba(255,255,255,0.04);"></div>
-        </div>
-      </div>
-    `;
+      </div>`;
   }
 }
 
 function updateBio(p) {
-  bioText.textContent = p.vibe;
-  statCards.innerHTML = p.stats.map(s => `
-    <div class="bg-surface-container-low flex-1 p-4 rounded-[20px] flex flex-col items-center gap-1.5">
-      <span class="material-symbols-outlined text-primary" style="font-size:19px;">${s.icon}</span>
-      <span class="text-[11px] text-on-surface-variant font-label font-medium text-center">${s.label}</span>
-      <span class="text-[10px] text-on-surface-variant/45 font-label">${s.sub}</span>
-    </div>
-  `).join('');
+  document.getElementById('bio-text').textContent = p.vibe;
+  document.getElementById('stat-cards').innerHTML = p.stats.map(s=>`
+    <div style="background:#131313;flex:1;padding:14px 10px;border-radius:20px;display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <i class="ph-duotone ${s.icon}" style="font-size:20px;color:#ff906a;"></i>
+      <span style="font-size:11px;color:#adaaaa;font-family:'Inter';font-weight:500;text-align:center;">${s.label}</span>
+      <span style="font-size:10px;color:rgba(173,170,170,0.45);font-family:'Inter';">${s.sub}</span>
+    </div>`).join('');
 }
 
 function renderDots(p) {
-  photoDots.innerHTML = Array.from({length: p.photoCount}, (_, i) =>
-    `<div class="w-1.5 h-1.5 rounded-full ${i === 0 ? 'dot-active w-4' : 'dot-inactive'} transition-all duration-300"></div>`
+  document.getElementById('photo-dots').innerHTML = Array.from({length:p.photoCount},(_,i)=>
+    `<div style="height:6px;border-radius:999px;transition:all 0.3s;${i===0?'width:18px;background:linear-gradient(135deg,#FF6B35,#F04E30);':'width:6px;background:rgba(255,255,255,0.2);'}"></div>`
   ).join('');
 }
 
 function initCards() {
-  slot1.style.visibility = 'visible';
-  slot2.style.visibility = 'visible';
-  slot3.style.visibility = 'visible';
+  [slot1,slot2,slot3].forEach(s=>{s.style.visibility='visible';});
   emptyState.style.display = 'none';
-  renderCard(slot1, currentIndex,     'c1');
-  renderCard(slot2, currentIndex + 1, 'c2');
-  renderCard(slot3, currentIndex + 2, 'c3');
+  renderCard(slot1, idx,   true);
+  renderCard(slot2, idx+1, false);
+  renderCard(slot3, idx+2, false);
 }
 
-// ─────────────────────────────────────────────────────────────
-// SWIPE DRAG
-// ─────────────────────────────────────────────────────────────
-function setupSwipe() {
-  slot1.addEventListener('mousedown',  onDragStart, { passive: true });
-  slot1.addEventListener('touchstart', onDragStart, { passive: true });
-  window.addEventListener('mousemove',  onDragMove, { passive: true });
-  window.addEventListener('touchmove',  onDragMove, { passive: true });
-  window.addEventListener('mouseup',   onDragEnd);
-  window.addEventListener('touchend',  onDragEnd);
+// ─── DRAG ───────────────────────────────────────────────────
+function setupDrag() {
+  slot1.addEventListener('mousedown',  dragStart, {passive:true});
+  slot1.addEventListener('touchstart', dragStart, {passive:true});
+  window.addEventListener('mousemove',  dragMove, {passive:true});
+  window.addEventListener('touchmove',  dragMove, {passive:true});
+  window.addEventListener('mouseup',   dragEnd);
+  window.addEventListener('touchend',  dragEnd);
 }
 
-function onDragStart(e) {
-  if (currentIndex >= profiles.length) return;
-  isDragging = true;
-  const pt = e.touches ? e.touches[0] : e;
-  startX = pt.clientX; startY = pt.clientY;
-  slot1.style.transition = 'none';
+function dragStart(e) {
+  if (idx>=profiles.length) return;
+  isDrag=true;
+  const pt = e.touches?e.touches[0]:e;
+  sx=pt.clientX; sy=pt.clientY;
+  slot1.style.transition='none';
 }
 
-function onDragMove(e) {
-  if (!isDragging) return;
-  const pt = e.touches ? e.touches[0] : e;
-  currentX = pt.clientX - startX;
-  currentY = pt.clientY - startY;
-
-  const rot = currentX * 0.08;
-  slot1.style.transform = `translateX(${currentX}px) translateY(${currentY}px) rotate(${rot}deg)`;
-
-  // swipe labels
-  const threshX = 60, threshY = -80;
-  const lc = document.getElementById('lbl-connect');
-  const lp = document.getElementById('lbl-pass');
-  const lv = document.getElementById('lbl-vibe');
-  if (lc) lc.style.opacity = currentX > threshX ? Math.min((currentX - threshX) / 60, 1) : 0;
-  if (lp) lp.style.opacity = currentX < -threshX ? Math.min((-currentX - threshX) / 60, 1) : 0;
-  if (lv) lv.style.opacity = currentY < threshY ? Math.min((-currentY + threshY) / 60, 1) : 0;
+function dragMove(e) {
+  if (!isDrag) return;
+  const pt = e.touches?e.touches[0]:e;
+  cx=pt.clientX-sx; cy=pt.clientY-sy;
+  slot1.style.transform=`translateX(${cx}px) translateY(${cy}px) rotate(${cx*0.07}deg)`;
+  const lc=document.getElementById('lbl-c');
+  const lp=document.getElementById('lbl-p');
+  const lv=document.getElementById('lbl-v');
+  if(lc) lc.style.opacity = cx>60 ? Math.min((cx-60)/60,1) : 0;
+  if(lp) lp.style.opacity = cx<-60 ? Math.min((-cx-60)/60,1) : 0;
+  if(lv) lv.style.opacity = cy<-80 ? Math.min((-cy-80)/60,1) : 0;
 }
 
-function onDragEnd() {
-  if (!isDragging) return;
-  isDragging = false;
-  slot1.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
-
-  const THRESH_X = 100, THRESH_Y = -100;
-  if (currentX > THRESH_X)       { triggerConnect(); }
-  else if (currentX < -THRESH_X) { triggerPass(); }
-  else if (currentY < THRESH_Y)  { triggerVibe(); }
+function dragEnd() {
+  if (!isDrag) return; isDrag=false;
+  slot1.style.transition='transform 0.32s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.32s';
+  if      (cx>100)  triggerConnect();
+  else if (cx<-100) triggerPass();
+  else if (cy<-110) triggerVibe();
   else {
-    // snap back
-    slot1.style.transform = 'scale(1) translateY(0)';
-    const lc = document.getElementById('lbl-connect');
-    const lp = document.getElementById('lbl-pass');
-    const lv = document.getElementById('lbl-vibe');
-    if (lc) lc.style.opacity = 0;
-    if (lp) lp.style.opacity = 0;
-    if (lv) lv.style.opacity = 0;
+    slot1.style.transform='scale(1) translateY(0)';
+    ['lbl-c','lbl-p','lbl-v'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.opacity=0;});
   }
-  currentX = 0; currentY = 0;
+  cx=0; cy=0;
 }
 
-// ─────────────────────────────────────────────────────────────
-// ACTIONS
-// ─────────────────────────────────────────────────────────────
-function pulsebtn(id) {
-  const b = document.getElementById(id);
-  if (!b) return;
-  b.classList.remove('btn-pulse');
-  void b.offsetWidth;
-  b.classList.add('btn-pulse');
-  setTimeout(() => b.classList.remove('btn-pulse'), 350);
+// ─── CARD TAP → EXPAND ──────────────────────────────────────
+function onCardTap(e) {
+  // only if not a drag
+  if (Math.abs(cx)>5||Math.abs(cy)>5) return;
+  openProfileExpand(profiles[idx]);
 }
 
-function advanceCards(flyClass, toastMsg) {
-  if (currentIndex >= profiles.length) return;
-  pulsebtn('btn-' + (flyClass === 'fly-right' ? 'connect' : flyClass === 'fly-left' ? 'pass' : flyClass === 'fly-up' ? 'vibe' : 'wave'));
+function openProfileExpand(p) {
+  const el = document.getElementById('profile-expand');
+  document.getElementById('expand-img').src = p.photo||'';
+  document.getElementById('expand-img').style.display = p.photo?'block':'none';
+  document.getElementById('expand-name').textContent = `${p.name}, ${p.age}`;
+  document.getElementById('expand-res').innerHTML = `<i class="ph ph-building" style="font-size:13px;"></i> ${p.res} · ${p.room}`;
+  document.getElementById('expand-status').textContent = p.status;
+  document.getElementById('expand-bio').textContent = p.vibe;
+  document.getElementById('expand-intents').innerHTML = p.intents.map(t=>`<span style="background:#1e1e1e;color:#fff;font-size:12px;font-family:'Inter';padding:6px 14px;border-radius:999px;">${t}</span>`).join('');
+  document.getElementById('expand-stats').innerHTML = p.stats.map(s=>`
+    <div style="background:#131313;flex:1;padding:14px 10px;border-radius:16px;display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <i class="ph-duotone ${s.icon}" style="font-size:20px;color:#ff906a;"></i>
+      <span style="font-size:11px;color:#adaaaa;font-family:'Inter';font-weight:500;text-align:center;">${s.label}</span>
+    </div>`).join('');
+  el.classList.add('open');
+}
 
-  // Hide labels
-  const lc = document.getElementById('lbl-connect');
-  const lp = document.getElementById('lbl-pass');
-  const lv = document.getElementById('lbl-vibe');
-  if (lc) { lc.style.opacity = flyClass === 'fly-right' ? 1 : 0; }
-  if (lp) { lp.style.opacity = flyClass === 'fly-left'  ? 1 : 0; }
-  if (lv) { lv.style.opacity = flyClass === 'fly-up'    ? 1 : 0; }
+function closeProfileExpand() {
+  document.getElementById('profile-expand').classList.remove('open');
+}
 
+// ─── ACTIONS ────────────────────────────────────────────────
+function advance(flyClass, toast) {
+  if (idx>=profiles.length) return;
+  history.push({idx, flyClass});
   slot1.classList.add(flyClass);
-  showToast(toastMsg);
-
-  setTimeout(() => {
-    currentIndex++;
+  showToast(toast);
+  setTimeout(()=>{
+    idx++;
     slot1.classList.remove(flyClass);
-    slot1.style.transform = 'scale(1) translateY(0)';
-    slot1.style.transition = '';
-
-    if (currentIndex >= profiles.length) {
-      // All swiped
-      slot1.innerHTML = '';
-      slot2.innerHTML = '';
-      slot3.innerHTML = '';
-      slot1.style.visibility = 'hidden';
-      slot2.style.visibility = 'hidden';
-      slot3.style.visibility = 'hidden';
-      emptyState.style.display = 'flex';
-      photoDots.innerHTML = '';
-      bioText.textContent = '';
-      statCards.innerHTML = '';
-      return;
+    slot1.style.transform='scale(1) translateY(0)';
+    slot1.style.transition='';
+    if (idx>=profiles.length) {
+      [slot1,slot2,slot3].forEach(s=>{s.innerHTML='';s.style.visibility='hidden';});
+      emptyState.style.display='flex';
+      document.getElementById('photo-dots').innerHTML='';
+      document.getElementById('bio-text').textContent='';
+      document.getElementById('stat-cards').innerHTML='';
+    } else {
+      renderCard(slot1,idx,true);
+      renderCard(slot2,idx+1,false);
+      renderCard(slot3,idx+2,false);
     }
-
-    renderCard(slot1, currentIndex,     'c1');
-    renderCard(slot2, currentIndex + 1, 'c2');
-    renderCard(slot3, currentIndex + 2, 'c3');
-  }, 440);
+    showUndo();
+  }, 420);
 }
 
-function triggerConnect() { advanceCards('fly-right', `💛 Connected with ${profiles[currentIndex]?.name}!`); }
-function triggerPass()    { advanceCards('fly-left',  `Passed`); }
-function triggerVibe()    { advanceCards('fly-up',    `✨ Vibed with ${profiles[currentIndex]?.name}!`); }
+function triggerConnect() {
+  const p = profiles[idx];
+  // 40% chance of match for demo
+  const isMatch = Math.random() < 0.4;
+  advance('fly-r', isMatch ? '' : `💛 Connected with ${p.name}!`);
+  if (isMatch) setTimeout(()=>showMatch(p), 480);
+}
+
+function triggerPass()  { advance('fly-l', 'Passed'); }
+
+function triggerVibe() {
+  // show secret crush UI before advancing
+  const p = profiles[idx];
+  document.getElementById('crush-text').textContent = `${p.name} only finds out if they Vibe you back. Keep it mysterious?`;
+  document.getElementById('crush-overlay').classList.add('show');
+  pendingCrush = true;
+}
+
+function confirmCrush(secret) {
+  document.getElementById('crush-overlay').classList.remove('show');
+  const p = profiles[idx];
+  advance('fly-u', secret ? `✨ Secret crush on ${p.name}` : `✨ Vibed with ${p.name}!`);
+  pendingCrush = false;
+}
+
+function closeCrush() {
+  document.getElementById('crush-overlay').classList.remove('show');
+}
 
 function triggerWave() {
-  pulsebtn('btn-wave');
-  showToast(`👋 Waved at ${profiles[currentIndex]?.name}`);
-  // wave doesn't advance — it's a soft non-committal hello
-  setTimeout(() => advanceCards('fly-right', `👋 Wave sent!`), 400);
+  const p = profiles[idx];
+  showToast(`👋 Waved at ${p.name}`);
+  setTimeout(()=>advance('fly-r','Wave sent!'), 350);
 }
 
 function triggerJoin() {
-  pulsebtn('btn-join');
-  const p = profiles[currentIndex];
-  if (p) showToast(`🟢 Joining ${p.name}'s plan!`);
-  setTimeout(() => advanceCards('fly-right', `You're in!`), 400);
+  const p = profiles[idx];
+  showToast(`🟢 Joining ${p.name}'s plan!`);
+  setTimeout(()=>advance('fly-r',"You're in!"), 350);
 }
 
-// ─────────────────────────────────────────────────────────────
-// UI HELPERS
-// ─────────────────────────────────────────────────────────────
-function setContext(clicked) {
-  // only toggle within same group (ctx)
-  clicked.closest('div').querySelectorAll('.ctx-active,.ctx-inactive').forEach(el => {
-    el.classList.replace('ctx-active','ctx-inactive');
-  });
-  clicked.classList.replace('ctx-inactive','ctx-active');
+// ─── MATCH ──────────────────────────────────────────────────
+function showMatch(p) {
+  const ov = document.getElementById('match-overlay');
+  document.getElementById('match-name').textContent = p.name;
+  const img = document.getElementById('match-avatar-img');
+  img.src = p.photo||'';
+  img.style.display = p.photo?'block':'none';
+  document.getElementById('match-avatar').style.background = p.photo?'':'#262626';
+  ov.classList.add('show');
+  spawnHearts();
 }
 
-function setFilter(clicked) {
-  clicked.closest('div').querySelectorAll('.fp-active,.fp-inactive').forEach(el => {
-    el.classList.replace('fp-active','fp-inactive');
-  });
-  clicked.classList.replace('fp-inactive','fp-active');
+function closeMatch() {
+  document.getElementById('match-overlay').classList.remove('show');
+  document.getElementById('match-hearts').innerHTML='';
 }
 
-function openFilterSheet() {
-  document.getElementById('filter-sheet').classList.add('open');
-  document.body.style.overflow = 'hidden';
+function spawnHearts() {
+  const container = document.getElementById('match-hearts');
+  container.innerHTML='';
+  for(let i=0;i<18;i++){
+    const h=document.createElement('div');
+    const size=12+Math.random()*18;
+    const left=Math.random()*100;
+    const delay=Math.random()*1.2;
+    const dur=2+Math.random()*2;
+    h.style.cssText=`position:absolute;bottom:-20px;left:${left}%;font-size:${size}px;opacity:0;animation:float-heart ${dur}s ${delay}s ease-out forwards;`;
+    h.textContent='❤️';
+    container.appendChild(h);
+  }
+  const style=document.createElement('style');
+  style.textContent=`@keyframes float-heart{0%{transform:translateY(0) scale(0.5);opacity:0.8}100%{transform:translateY(-110vh) scale(1);opacity:0;}}`;
+  document.head.appendChild(style);
 }
 
-function closeFilterSheet() {
-  document.getElementById('filter-sheet').classList.remove('open');
-  document.body.style.overflow = '';
-  // read active selections and show toast
-  const ctx = document.querySelector('#filter-panel .ctx-active')?.textContent?.trim() || '';
-  const flt = document.querySelector('#filter-panel .fp-active')?.textContent?.trim() || '';
-  showToast(`${ctx} · ${flt}`);
+// ─── COMPLIMENTS ─────────────────────────────────────────────
+function openCompliments() {
+  const p = profiles[idx];
+  const list = document.getElementById('compliment-list');
+  list.innerHTML = compliments.map(c=>`
+    <button onclick="sendCompliment('${c}')" style="width:100%;padding:14px 16px;border-radius:14px;border:none;cursor:pointer;background:#1e1e1e;color:#fff;font-family:'Inter',sans-serif;font-size:14px;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='#262626'" onmouseout="this.style.background='#1e1e1e'">
+      ${c}
+    </button>`).join('');
+  openSheet('compliment-sheet');
 }
 
-function handleSheetClick(e) {
-  if (e.target === document.getElementById('filter-backdrop')) closeFilterSheet();
+function sendCompliment(c) {
+  closeSheet('compliment-sheet');
+  const p = profiles[idx];
+  showToast(`🎁 Sent anonymously to ${p.name}`);
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+// ─── UNDO ────────────────────────────────────────────────────
+let undoTimer = null;
+function showUndo() {
+  const btn = document.getElementById('undo-btn');
+  btn.classList.add('show');
+  clearTimeout(undoTimer);
+  undoTimer = setTimeout(()=>btn.classList.remove('show'), 4000);
 }
 
-function resetCards() {
-  currentIndex = 0;
-  initCards();
+function undoSwipe() {
+  if (!history.length) return;
+  const prev = history.pop();
+  idx = prev.idx;
+  document.getElementById('undo-btn').classList.remove('show');
+  renderCard(slot1,idx,true);
+  renderCard(slot2,idx+1,false);
+  renderCard(slot3,idx+2,false);
+  showToast('↩️ Undone');
 }
 
-// ─────────────────────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────────────────────
+function resetCards() { idx=0; history=[]; initCards(); }
+
+// ─── SHEETS ──────────────────────────────────────────────────
+function openSheet(id)  { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeSheet(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+  if(id==='filter-sheet'){
+    const ctx=document.querySelector('#filter-sheet .ctx-on')?.textContent?.trim()||'';
+    const fp =document.querySelector('#filter-sheet .fp-on')?.textContent?.trim()||'';
+    showToast(`${ctx} · ${fp}`);
+  }
+}
+function handleBackdrop(e,id){if(e.target.classList.contains('sheet-backdrop'))closeSheet(id);}
+
+function toggleCtx(el){
+  el.closest('div').querySelectorAll('.ctx-on,.ctx-off').forEach(b=>{b.classList.replace('ctx-on','ctx-off');});
+  el.classList.replace('ctx-off','ctx-on');
+}
+function toggleFp(el){
+  el.closest('div').querySelectorAll('.fp-on,.fp-off').forEach(b=>{b.classList.replace('fp-on','fp-off');});
+  el.classList.replace('fp-off','fp-on');
+}
+
+// ─── TOAST ───────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTmr);
+  toastTmr=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ─── INIT ────────────────────────────────────────────────────
 initCards();
 </script>
 </body>
